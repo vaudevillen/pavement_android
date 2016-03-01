@@ -3,6 +3,7 @@ package com.pnpc.pavement;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -28,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
     private static final int LOCATION_REQUEST = 1337;
     Button serviceButton;
     private TextView locationView;
+    private TextView lngView;
+    private TextView latView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,10 +50,14 @@ public class MainActivity extends AppCompatActivity {
 
 
         locationView=(TextView)findViewById(R.id.location_view);
-
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            Log.i("GPS permission code", "Check self permission: " + checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION));
+        }
         updateLocationView();
-        if (hasLocationPermission() == false){
-            requestPermissions(LOCATION_PERMS, LOCATION_REQUEST);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+            if(hasLocationPermission() == false) {
+                requestPermissions(LOCATION_PERMS, LOCATION_REQUEST);
+            }
         }
         serviceButton = (Button) findViewById(R.id.service_button);
 
@@ -108,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     private boolean hasLocationPermission() {
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.GINGERBREAD){
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M){
             return(PackageManager.PERMISSION_GRANTED==checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION));
         }
         else{

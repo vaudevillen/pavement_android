@@ -69,9 +69,9 @@ public class PavementService extends Service implements LocationListener, Sensor
             locManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0, this);
 
 
-            Location location = locManager.getLastKnownLocation(LocationManager.GPS_PROVIDER); //good for general location, not good if you need exact location.
-
-            displayLocationData(location);
+//            Location location = locManager.getLastKnownLocation(LocationManager.GPS_PROVIDER); //good for general location, not good if you need exact location.
+//
+//            displayLocationData(location);
         }
 
         return;
@@ -118,7 +118,8 @@ public class PavementService extends Service implements LocationListener, Sensor
 
     @Override
     public void onLocationChanged(Location location) {
-
+        Log.i("GPS", "Latitude: " + location.getLatitude());
+        Log.i("GPS", "Longitude: = " + location.getLongitude());
     }
 
     @Override
@@ -136,17 +137,4 @@ public class PavementService extends Service implements LocationListener, Sensor
 
     }
 
-    public void onRequestPermissionsResult(int requestCode,
-                                           String[] permissions,
-                                           int[] grantResults) {
-        if (requestCode == REQUEST_CODE_LOCATION) {
-            if (grantResults.length == 1
-                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // success!
-                Log.i("GPS Permission request", "Location permission granted");
-            } else {
-                Log.i("GPS Permission request", "Location permission denied!");
-            }
-        }
-    }
 }
