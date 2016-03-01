@@ -8,7 +8,6 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -25,6 +24,7 @@ import android.widget.Toast;
  */
 public class PavementService extends Service implements LocationListener, SensorEventListener {
 
+    private static final int REQUEST_CODE_LOCATION = 2;
     SensorManager sensorManager;
     LocationManager locManager;
 
@@ -36,6 +36,7 @@ public class PavementService extends Service implements LocationListener, Sensor
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         Sensor accelerometerSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         sensorManager.registerListener(this, accelerometerSensor, SensorManager.SENSOR_DELAY_GAME);
+
         setupLocationRequest();
         return START_STICKY;
     }
@@ -48,7 +49,10 @@ public class PavementService extends Service implements LocationListener, Sensor
 
 
 
-    void setupLocationRequest() {
+    public void setupLocationRequest() {
+        Log.i("GPS Permission", "" + ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION));
+        Log.i("GPS Permission result", "" + PackageManager.PERMISSION_GRANTED);
+
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 //            // TODO: Consider calling
 //            //    ActivityCompat#requestPermissions
@@ -56,23 +60,27 @@ public class PavementService extends Service implements LocationListener, Sensor
 //            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
 //            //                                          int[] grantResults)
 //            // to handle the case where the user grants the permission. See the documentation
-//            // for ActivityCompat#requestPermissions for more details.
 //
-            return;
-           }
-        locManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-        Log.i("GPS Test", "GPS Enabled: " + locManager.isProviderEnabled(LocationManager.GPS_PROVIDER));
-        locManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0, this);
+        }
+        else
+        {
+            locManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+            Log.i("GPS Test", "GPS Enabled: " + locManager.isProviderEnabled(LocationManager.GPS_PROVIDER));
+            locManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0, this);
 
-        Location location = locManager.getLastKnownLocation(LocationManager.GPS_PROVIDER); //good for general location, not good if you need exact location.
 
-        displayLocationData(location);
+//            Location location = locManager.getLastKnownLocation(LocationManager.GPS_PROVIDER); //good for general location, not good if you need exact location.
+//
+//            displayLocationData(location);
+        }
+
+        return;
 
     }
 
     void displayLocationData(Location location) {
         if (location == null) {
-            Log.i("", "Location null");
+            Log.i("GPS", "Location null");
             return;
         }
 
@@ -87,6 +95,7 @@ public class PavementService extends Service implements LocationListener, Sensor
             Log.i("GPS", "Speed: " + location.hasSpeed());
         }
     }
+
 
 
     @Override
@@ -109,7 +118,8 @@ public class PavementService extends Service implements LocationListener, Sensor
 
     @Override
     public void onLocationChanged(Location location) {
-
+        Log.i("GPS", "Latitude: " + location.getLatitude());
+        Log.i("GPS", "Longitude: = " + location.getLongitude());
     }
 
     @Override
@@ -126,4 +136,5 @@ public class PavementService extends Service implements LocationListener, Sensor
     public void onProviderDisabled(String provider) {
 
     }
+
 }
