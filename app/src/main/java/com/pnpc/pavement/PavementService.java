@@ -11,7 +11,6 @@ import android.hardware.SensorManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.location.LocationProvider;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
@@ -19,14 +18,22 @@ import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
+
 /**
  * Created by jjshin on 2/21/16.
  */
-public class PavementService extends Service implements LocationListener, SensorEventListener {
+public class PavementService extends Service implements com.google.android.gms.location.LocationListener, SensorEventListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
-    private static final int REQUEST_CODE_LOCATION = 2;
     SensorManager sensorManager;
     LocationManager locManager;
+    GoogleApiClient googleApiClient;
+    Location lastLocation;
+    LocationRequest locationRequest;
+    Boolean clientConnected = false;
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
@@ -37,7 +44,19 @@ public class PavementService extends Service implements LocationListener, Sensor
         Sensor accelerometerSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         sensorManager.registerListener(this, accelerometerSensor, SensorManager.SENSOR_DELAY_GAME);
 
-        setupLocationRequest();
+        locationRequest = createLocationRequest();
+
+        if (googleApiClient == null) {
+            googleApiClient = new GoogleApiClient.Builder(this)
+                    .addConnectionCallbacks(this)
+                    .addOnConnectionFailedListener(this)
+                    .addApi(LocationServices.API)
+                    .build();
+            googleApiClient.connect();
+        }
+        if (clientConnected == false){
+            setupLocationRequest();
+        }
         return START_STICKY;
     }
 
@@ -45,8 +64,8 @@ public class PavementService extends Service implements LocationListener, Sensor
     public void onDestroy() {
         super.onDestroy();
         sensorManager.unregisterListener(this);
+        stopLocationUpdates();
     }
-
 
 
     public void setupLocationRequest() {
@@ -60,47 +79,15 @@ public class PavementService extends Service implements LocationListener, Sensor
 //            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
 //            //                                          int[] grantResults)
 //            // to handle the case where the user grants the permission. See the documentation
-//
-        }
-        else
-        {
-            locManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-            Log.i("GPS Test", "GPS Enabled: " + locManager.isProviderEnabled(LocationManager.GPS_PROVIDER));
-            locManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0, this);
-
-
-//            Location location = locManager.getLastKnownLocation(LocationManager.GPS_PROVIDER); //good for general location, not good if you need exact location.
-//
-//            displayLocationData(location);
         }
 
         return;
 
     }
 
-    void displayLocationData(Location location) {
-        if (location == null) {
-            Log.i("GPS", "Location null");
-            return;
-        }
-
-        Log.i("GPS", "Latitude: " + location.getLatitude());
-        Log.i("GPS", "Longitude: = " + location.getLongitude());
-        Log.i("GPS", "Time: " + location.getTime());
-        if (location.hasAccuracy()) {
-            Log.i("GPS", "Accuracy: " + location.getAccuracy());
-        }
-        if(location.hasSpeed())
-        {
-            Log.i("GPS", "Speed: " + location.hasSpeed());
-        }
-    }
-
-
-
     @Override
     public void onSensorChanged(SensorEvent event) {
-        if(event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+        if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
             Log.i("Sensor Test", "SensorUpdate: " + event.values[0] + ", " + event.values[1] + ", " + event.values[2]);
         }
     }
@@ -118,23 +105,52 @@ public class PavementService extends Service implements LocationListener, Sensor
 
     @Override
     public void onLocationChanged(Location location) {
-        Log.i("GPS", "Latitude: " + location.getLatitude());
-        Log.i("GPS", "Longitude: = " + location.getLongitude());
+        Log.i("GPS on location changed", "Latitude: " + location.getLatitude());
+        Log.i("GPS on location changed", "Longitude: = " + location.getLongitude());
     }
 
     @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
+    public void onConnected(@Nullable Bundle bundle) {
+        Log.i("GPS googleclient", "GoogleClientApi connected");
+        clientConnected = true;
+        startLocationUpdates();
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+        Log.i("GPS googleclient", "GoogleClientApi connection suspended");
 
     }
 
     @Override
-    public void onProviderEnabled(String provider) {
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+        Log.i("GPS googleclient", "GoogleClientApi connection failed");
 
     }
 
-    @Override
-    public void onProviderDisabled(String provider) {
-
+    protected void startLocationUpdates() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        LocationServices.FusedLocationApi.requestLocationUpdates(
+                googleApiClient, locationRequest, this);
+    }
+    protected void stopLocationUpdates() {
+        LocationServices.FusedLocationApi.removeLocationUpdates(googleApiClient, this);
+    }
+    protected LocationRequest createLocationRequest() {
+        LocationRequest mLocationRequest = new LocationRequest();
+        mLocationRequest.setInterval(1000);
+        mLocationRequest.setFastestInterval(2000);
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        return mLocationRequest;
     }
 
 }

@@ -50,10 +50,14 @@ public class MainActivity extends AppCompatActivity {
 
 
         locationView=(TextView)findViewById(R.id.location_view);
+
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             Log.i("GPS permission code", "Check self permission: " + checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION));
         }
         updateLocationView();
+
+        //Checking SDK. If above 6.0, checks location permission. If not granted, requests it.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
             if(hasLocationPermission() == false) {
                 requestPermissions(LOCATION_PERMS, LOCATION_REQUEST);
@@ -123,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     private void updateLocationView(){
-        locationView.setText(String.valueOf(hasLocationPermission()));
+        locationView.setText("Access fine location permission granted: " + String.valueOf(hasLocationPermission()));
     }
 
 }
