@@ -9,7 +9,6 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.location.Location;
-import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -23,6 +22,11 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+
 /**
  * Created by jjshin on 2/21/16.
  */
@@ -31,9 +35,15 @@ public class PavementService extends Service implements com.google.android.gms.l
     SensorManager sensorManager;
     LocationManager locManager;
     GoogleApiClient googleApiClient;
-    Location lastLocation;
     LocationRequest locationRequest;
     Boolean clientConnected = false;
+    ArrayList<Float> xArray = new ArrayList<>();
+    ArrayList<Float> yArray = new ArrayList<>();
+    ArrayList<Float> zArray = new ArrayList<>();
+    Double startLat;
+    Double endLat;
+    Double startLng;
+    Double endLng;
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
@@ -89,6 +99,9 @@ public class PavementService extends Service implements com.google.android.gms.l
     public void onSensorChanged(SensorEvent event) {
         if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
             Log.i("Sensor Test", "SensorUpdate: " + event.values[0] + ", " + event.values[1] + ", " + event.values[2]);
+            xArray.add(event.values[0]);
+            yArray.add(event.values[1]);
+            zArray.add(event.values[2]);
         }
     }
 
@@ -107,12 +120,28 @@ public class PavementService extends Service implements com.google.android.gms.l
     public void onLocationChanged(Location location) {
         Log.i("GPS on location changed", "Latitude: " + location.getLatitude());
         Log.i("GPS on location changed", "Longitude: = " + location.getLongitude());
+        if(startLat == null || startLng == null){
+            startLat = location.getLatitude();
+            startLng = location.getLongitude();
+            return;
+        }
+        Log.i("GPS on location changed", "xarray data: " + xArray.toString());
+
+        endLat = location.getLatitude();
+        endLng = location.getLongitude();
+        JSONObject reading = createJson(xArray, yArray, zArray, startLng, startLat, endLat, endLng);
+        ReadingTask readingTask = new ReadingTask();
+        readingTask.execute(reading);
+
+        clearArrays();
+
+        startLat = endLat;
+        startLng = endLng;
     }
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
         Log.i("GPS googleclient", "GoogleClientApi connected");
-        clientConnected = true;
         startLocationUpdates();
     }
 
@@ -131,12 +160,7 @@ public class PavementService extends Service implements com.google.android.gms.l
     protected void startLocationUpdates() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
+            Log.i("GPS startLocationUpdates", "Somehow the permissions are missing");
             return;
         }
         LocationServices.FusedLocationApi.requestLocationUpdates(
@@ -148,9 +172,37 @@ public class PavementService extends Service implements com.google.android.gms.l
     protected LocationRequest createLocationRequest() {
         LocationRequest mLocationRequest = new LocationRequest();
         mLocationRequest.setInterval(1000);
-        mLocationRequest.setFastestInterval(2000);
+        mLocationRequest.setFastestInterval(900);
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         return mLocationRequest;
+    }
+
+    protected JSONObject createJson(ArrayList<Float> xArray, ArrayList<Float> yArray, ArrayList<Float> zArray, Double startLng,
+                                 Double startLat, Double endLat, Double endLng) {
+
+        JSONObject readingJson = new JSONObject();
+        try {
+            readingJson.put("acceleration_x", xArray);
+            readingJson.put("acceleration_y", yArray);
+            readingJson.put("acceleration_z", zArray);
+            readingJson.put("start_lon", startLng);
+            readingJson.put("start_lat", startLat);
+            readingJson.put("end_lat", endLat);
+            readingJson.put("end_lat", endLng);
+
+        } catch (JSONException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        Log.i("Json test", readingJson.toString());
+
+        return readingJson;
+    }
+
+    protected void clearArrays(){
+        xArray.clear();
+        yArray.clear();
+        zArray.clear();
     }
 
 }
