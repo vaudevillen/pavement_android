@@ -2,6 +2,7 @@ package com.pnpc.pavement;
 
 import android.Manifest;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.hardware.Sensor;
@@ -10,6 +11,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.location.Location;
 import android.location.LocationManager;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
@@ -44,6 +46,7 @@ public class PavementService extends Service implements com.google.android.gms.l
     Double endLat;
     Double startLng;
     Double endLng;
+    final static int RIDE_ID = 179;
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
@@ -55,7 +58,7 @@ public class PavementService extends Service implements com.google.android.gms.l
         sensorManager.registerListener(this, accelerometerSensor, SensorManager.SENSOR_DELAY_GAME);
 
         locationRequest = createLocationRequest();
-
+    Log.i("network", "" + isOnline(this));
         if (googleApiClient == null) {
             googleApiClient = new GoogleApiClient.Builder(this)
                     .addConnectionCallbacks(this)
@@ -160,9 +163,10 @@ public class PavementService extends Service implements com.google.android.gms.l
     protected void startLocationUpdates() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
-            Log.i("GPS startLocationUpdates", "Somehow the permissions are missing");
+            Log.i("GPS startupdates", "Somehow the permissions are missing");
             return;
         }
+        Log.i("GPS startUpdates", "updates request about to be started");
         LocationServices.FusedLocationApi.requestLocationUpdates(
                 googleApiClient, locationRequest, this);
     }
@@ -189,6 +193,7 @@ public class PavementService extends Service implements com.google.android.gms.l
             readingJson.put("start_lat", startLat);
             readingJson.put("end_lat", endLat);
             readingJson.put("end_lat", endLng);
+            readingJson.put("ride_id", RIDE_ID);
 
         } catch (JSONException e) {
             // TODO Auto-generated catch block
@@ -204,5 +209,14 @@ public class PavementService extends Service implements com.google.android.gms.l
         yArray.clear();
         zArray.clear();
     }
+    public boolean isOnline(Context context) {
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        android.net.NetworkInfo networkinfo = cm.getActiveNetworkInfo();
+        if (networkinfo != null && networkinfo.isConnected()) {
+            return true;
+        }
+        return false;
+    }
+
 
 }

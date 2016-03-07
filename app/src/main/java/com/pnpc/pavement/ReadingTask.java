@@ -1,15 +1,21 @@
 package com.pnpc.pavement;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.util.Log;
 
 import org.json.JSONObject;
 
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
@@ -17,6 +23,8 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
+
+import javax.net.ssl.HttpsURLConnection;
 
 
 /**
@@ -33,14 +41,18 @@ public class ReadingTask extends AsyncTask<JSONObject, Void, String> {
         String jsonResponse = null;
         JSONObject jsonObj = params[0];
         try {
-            url = new URL("http://192.168.2.196:3000/reading");
+            url = new URL("https://10.0.2.2:3000/readings");
             connection = (HttpURLConnection) url.openConnection();
+            connection.setDoOutput(true);
+            connection.setChunkedStreamingMode(0);
             connection.setRequestMethod("POST");
             connection.setRequestProperty("Content-Type", "application/json");
             connection.setRequestProperty("Accept", "application/json");
-            Writer writer = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream(), "UTF-8"));
-            writer.write(jsonObj.toString());
+            connection.setDoOutput(true);
+            DataOutputStream writer = new DataOutputStream(connection.getOutputStream());
+            writer.writeBytes(jsonObj.toString());
 // json data
+            writer.flush();
             writer.close();
             InputStream inputStream = connection.getInputStream();
 //input stream
