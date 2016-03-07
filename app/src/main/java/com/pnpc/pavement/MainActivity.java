@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
                 if (serviceButton.getText() == "Start Service") {
                     startService(serviceIntent);
                     serviceButton.setText("Stop Service");
-                    Log.d("", "startService called");
+                    Log.d("PavementService", "startService called");
                 } else {
                     stopService(serviceIntent);
                     serviceButton.setText("Start Service");
