@@ -66,10 +66,9 @@ public class PavementService extends Service implements com.google.android.gms.l
                     .addApi(LocationServices.API)
                     .build();
             googleApiClient.connect();
+            Log.i("GoogleAPIClient", "" + googleApiClient);
         }
-        if (clientConnected == false){
-            setupLocationRequest();
-        }
+
         return START_STICKY;
     }
 
@@ -194,6 +193,8 @@ public class PavementService extends Service implements com.google.android.gms.l
             readingJson.put("end_lat", endLat);
             readingJson.put("end_lat", endLng);
             readingJson.put("ride_id", RIDE_ID);
+
+
 
         } catch (JSONException e) {
             // TODO Auto-generated catch block

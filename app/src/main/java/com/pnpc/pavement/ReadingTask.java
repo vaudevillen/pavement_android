@@ -41,7 +41,7 @@ public class ReadingTask extends AsyncTask<JSONObject, Void, String> {
         String jsonResponse = null;
         JSONObject jsonObj = params[0];
         try {
-            url = new URL("https://10.0.2.2:3000/readings");
+            url = new URL("https://project-pavement.herokuapp.com/readings");
             connection = (HttpURLConnection) url.openConnection();
             connection.setDoOutput(true);
             connection.setChunkedStreamingMode(0);
