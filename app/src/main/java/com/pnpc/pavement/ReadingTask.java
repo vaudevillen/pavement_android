@@ -19,8 +19,10 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
+import java.net.Authenticator;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.PasswordAuthentication;
 import java.net.ProtocolException;
 import java.net.URL;
 
@@ -40,6 +42,18 @@ public class ReadingTask extends AsyncTask<JSONObject, Void, String> {
         HttpURLConnection connection;
         String jsonResponse = null;
         JSONObject jsonObj = params[0];
+
+
+        Authenticator.setDefault(new Authenticator()
+        {
+            protected PasswordAuthentication getPasswordAuthentication()
+            {
+                return new PasswordAuthentication("", ("").toCharArray());
+            }
+        });
+
+
+
         try {
             url = new URL("https://project-pavement.herokuapp.com/readings");
             connection = (HttpURLConnection) url.openConnection();
