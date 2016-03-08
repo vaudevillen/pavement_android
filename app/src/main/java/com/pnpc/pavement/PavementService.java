@@ -38,7 +38,6 @@ public class PavementService extends Service implements com.google.android.gms.l
     LocationManager locManager;
     GoogleApiClient googleApiClient;
     LocationRequest locationRequest;
-    Boolean clientConnected = false;
     ArrayList<Float> xArray = new ArrayList<>();
     ArrayList<Float> yArray = new ArrayList<>();
     ArrayList<Float> zArray = new ArrayList<>();
@@ -55,7 +54,7 @@ public class PavementService extends Service implements com.google.android.gms.l
 
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         Sensor accelerometerSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        sensorManager.registerListener(this, accelerometerSensor, SensorManager.SENSOR_DELAY_GAME);
+        sensorManager.registerListener(this, accelerometerSensor, SensorManager.SENSOR_DELAY_NORMAL);
 
         locationRequest = createLocationRequest();
     Log.i("network", "" + isOnline(this));
@@ -66,10 +65,9 @@ public class PavementService extends Service implements com.google.android.gms.l
                     .addApi(LocationServices.API)
                     .build();
             googleApiClient.connect();
+            Log.i("GoogleAPIClient", "" + googleApiClient);
         }
-        if (clientConnected == false){
-            setupLocationRequest();
-        }
+
         return START_STICKY;
     }
 
@@ -194,6 +192,8 @@ public class PavementService extends Service implements com.google.android.gms.l
             readingJson.put("end_lat", endLat);
             readingJson.put("end_lat", endLng);
             readingJson.put("ride_id", RIDE_ID);
+
+
 
         } catch (JSONException e) {
             // TODO Auto-generated catch block
