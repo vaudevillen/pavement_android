@@ -48,7 +48,7 @@ public class ReadingTask extends AsyncTask<JSONObject, Void, String> {
         {
             protected PasswordAuthentication getPasswordAuthentication()
             {
-                return new PasswordAuthentication("", ("").toCharArray());
+                return new PasswordAuthentication("peemster", ("halsadick").toCharArray());
             }
         });
 

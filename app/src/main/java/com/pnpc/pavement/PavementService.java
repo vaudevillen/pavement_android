@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.util.Base64;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -27,7 +28,19 @@ import com.google.android.gms.location.LocationServices;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
+
+import okhttp3.Interceptor;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.Field;
 
 /**
  * Created by jjshin on 2/21/16.
@@ -46,6 +59,10 @@ public class PavementService extends Service implements com.google.android.gms.l
     Double startLng;
     Double endLng;
     final static int RIDE_ID = 179;
+    Retrofit retrofit;
+    ReadingService readingService;
+    public static OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
@@ -57,7 +74,7 @@ public class PavementService extends Service implements com.google.android.gms.l
         sensorManager.registerListener(this, accelerometerSensor, SensorManager.SENSOR_DELAY_NORMAL);
 
         locationRequest = createLocationRequest();
-    Log.i("network", "" + isOnline(this));
+        Log.i("network", "" + isOnline(this));
         if (googleApiClient == null) {
             googleApiClient = new GoogleApiClient.Builder(this)
                     .addConnectionCallbacks(this)
@@ -67,6 +84,8 @@ public class PavementService extends Service implements com.google.android.gms.l
             googleApiClient.connect();
             Log.i("GoogleAPIClient", "" + googleApiClient);
         }
+
+        readingService = ServiceGenerator.createService(ReadingService.class, "", "");
 
         return START_STICKY;
     }
@@ -84,12 +103,6 @@ public class PavementService extends Service implements com.google.android.gms.l
         Log.i("GPS Permission result", "" + PackageManager.PERMISSION_GRANTED);
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-//            // TODO: Consider calling
-//            //    ActivityCompat#requestPermissions
-//            // here to request the missing permissions, and then overriding
-//            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-//            //                                          int[] grantResults)
-//            // to handle the case where the user grants the permission. See the documentation
         }
 
         return;
@@ -126,14 +139,23 @@ public class PavementService extends Service implements com.google.android.gms.l
             startLng = location.getLongitude();
             return;
         }
-        Log.i("GPS on location changed", "xarray data: " + xArray.toString());
 
         endLat = location.getLatitude();
         endLng = location.getLongitude();
-        JSONObject reading = createJson(xArray, yArray, zArray, startLng, startLat, endLat, endLng);
-        ReadingTask readingTask = new ReadingTask();
-        readingTask.execute(reading);
 
+        Call<Reading> call = readingService.createReading(startLat, startLng, endLat, endLng, xArray.toString(), yArray.toString(), zArray.toString(), RIDE_ID);
+        call.enqueue(new Callback<Reading>() {
+
+                         @Override
+                         public void onResponse(Call<Reading> call, retrofit2.Response<Reading> response) {
+                             Log.i("Retrofit onResponse", response.toString());
+                         }
+
+                         @Override
+                         public void onFailure(Call<Reading> call, Throwable t) {
+                             Log.i("Retrofit onFailure", "Well, that didn't work");
+                         }
+                     });
         clearArrays();
 
         startLat = endLat;
@@ -177,31 +199,6 @@ public class PavementService extends Service implements com.google.android.gms.l
         mLocationRequest.setFastestInterval(900);
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         return mLocationRequest;
-    }
-
-    protected JSONObject createJson(ArrayList<Float> xArray, ArrayList<Float> yArray, ArrayList<Float> zArray, Double startLng,
-                                 Double startLat, Double endLat, Double endLng) {
-
-        JSONObject readingJson = new JSONObject();
-        try {
-            readingJson.put("acceleration_x", xArray);
-            readingJson.put("acceleration_y", yArray);
-            readingJson.put("acceleration_z", zArray);
-            readingJson.put("start_lon", startLng);
-            readingJson.put("start_lat", startLat);
-            readingJson.put("end_lat", endLat);
-            readingJson.put("end_lat", endLng);
-            readingJson.put("ride_id", RIDE_ID);
-
-
-
-        } catch (JSONException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        Log.i("Json test", readingJson.toString());
-
-        return readingJson;
     }
 
     protected void clearArrays(){

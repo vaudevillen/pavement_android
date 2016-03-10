@@ -6,36 +6,15 @@
     </shared>
   </component>
   <component name="AndroidLogFilters">
-    <option name="TOOL_WINDOW_CUSTOM_FILTER" value="j" />
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="71758c45-d2e6-44f3-bd3f-18c7c504f82c" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/okhttp_3_0_1.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/okio_1_6_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/retrofit_2_0_0_beta4.xml" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/mediarouter_v7_23_0_0.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/play_services_8_4_0.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/play_services_ads_8_4_0.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/play_services_analytics_8_4_0.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/play_services_appindexing_8_4_0.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/play_services_appinvite_8_4_0.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/play_services_appstate_8_4_0.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/play_services_auth_8_4_0.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/play_services_cast_8_4_0.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/play_services_drive_8_4_0.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/play_services_fitness_8_4_0.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/play_services_games_8_4_0.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/play_services_gcm_8_4_0.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/play_services_identity_8_4_0.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/play_services_measurement_8_4_0.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/play_services_nearby_8_4_0.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/play_services_panorama_8_4_0.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/play_services_plus_8_4_0.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/play_services_safetynet_8_4_0.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/play_services_vision_8_4_0.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/play_services_wallet_8_4_0.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/play_services_wearable_8_4_0.xml" afterPath="" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/pnpc/pavement/Reading.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/pnpc/pavement/ReadingService.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/pnpc/pavement/ServiceGenerator.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/converter_gson_2_0_0_beta4.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/gson_2_4.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.8/taskArtifacts/cache.properties.lock" afterPath="$PROJECT_DIR$/.gradle/2.8/taskArtifacts/cache.properties.lock" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.8/taskArtifacts/fileHashes.bin" afterPath="$PROJECT_DIR$/.gradle/2.8/taskArtifacts/fileHashes.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.8/taskArtifacts/fileSnapshots.bin" afterPath="$PROJECT_DIR$/.gradle/2.8/taskArtifacts/fileSnapshots.bin" />
@@ -76,7 +55,21 @@
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/pnpc/pavement/PavementService.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="208" column="23" selection-start-line="208" selection-start-column="23" selection-end-line="208" selection-end-column="23" />
+              <caret line="87" column="83" selection-start-line="87" selection-start-column="83" selection-end-line="87" selection-end-column="83" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#4481#4482#0" expanded="true" />
+                <element signature="e#4508#4509#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ReadingService.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/pnpc/pavement/ReadingService.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="14" column="19" selection-start-line="14" selection-start-column="19" selection-end-line="14" selection-end-column="19" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -84,11 +77,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/pnpc/pavement/MainActivity.java">
+      <file leaf-file-name="Reading.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/pnpc/pavement/Reading.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="79" column="13" selection-start-line="79" selection-start-column="13" selection-end-line="79" selection-end-column="13" />
+            <state vertical-scroll-proportion="0.4205052">
+              <caret line="32" column="0" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -97,33 +90,9 @@
       <file leaf-file-name="build.gradle" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/build.gradle">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-9.074074">
-              <caret line="26" column="0" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AndroidManifest.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
-          <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="26" column="0" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
+              <caret line="28" column="62" selection-start-line="28" selection-start-column="62" selection-end-line="28" selection-end-column="62" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ReadingTask.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/pnpc/pavement/ReadingTask.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.33660933">
-              <caret line="50" column="56" selection-start-line="50" selection-start-column="56" selection-end-line="50" selection-end-column="56" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#1221#1436#0" expanded="true" />
-                <element signature="e#1435#1436#0" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -133,7 +102,36 @@
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="719" column="0" selection-start-line="719" selection-start-column="0" selection-end-line="719" selection-end-column="0" />
-              <folding />
+              <folding>
+                <element signature="e#0#29272#0" expanded="false" />
+                <element signature="imports" expanded="false" />
+                <element signature="e#4878#4879#0" expanded="false" />
+                <element signature="e#4915#4916#0" expanded="false" />
+                <element signature="e#5095#5096#0" expanded="false" />
+                <element signature="e#5163#5164#0" expanded="false" />
+                <element signature="e#7938#7939#0" expanded="false" />
+                <element signature="e#7982#7983#0" expanded="false" />
+                <element signature="e#13885#13886#0" expanded="false" />
+                <element signature="e#13935#13936#0" expanded="false" />
+                <element signature="e#14385#14386#0" expanded="false" />
+                <element signature="e#14440#14441#0" expanded="false" />
+                <element signature="e#14989#14990#0" expanded="false" />
+                <element signature="e#15036#15037#0" expanded="false" />
+                <element signature="e#15782#15783#0" expanded="false" />
+                <element signature="e#15828#15829#0" expanded="false" />
+                <element signature="e#16937#16938#0" expanded="false" />
+                <element signature="e#16987#16988#0" expanded="false" />
+                <element signature="e#18056#18057#0" expanded="false" />
+                <element signature="e#18094#18095#0" expanded="false" />
+                <element signature="e#19426#19427#0" expanded="false" />
+                <element signature="e#19466#19467#0" expanded="false" />
+                <element signature="e#20645#20646#0" expanded="false" />
+                <element signature="e#20687#20688#0" expanded="false" />
+                <element signature="e#23784#23785#0" expanded="false" />
+                <element signature="e#23841#23842#0" expanded="false" />
+                <element signature="e#24258#24259#0" expanded="false" />
+                <element signature="e#24304#24305#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -144,11 +142,14 @@
             <state vertical-scroll-proportion="0.0">
               <caret line="249" column="0" selection-start-line="249" selection-start-column="0" selection-end-line="249" selection-end-column="0" />
               <folding>
-                <element signature="e#4071#4078#0" expanded="true" />
-                <element signature="e#4281#4282#0" expanded="true" />
-                <element signature="e#4310#4311#0" expanded="true" />
-                <element signature="e#6877#6878#0" expanded="true" />
-                <element signature="e#6932#6933#0" expanded="true" />
+                <element signature="e#0#13186#0" expanded="false" />
+                <element signature="imports" expanded="false" />
+                <element signature="e#4281#4282#0" expanded="false" />
+                <element signature="e#4310#4311#0" expanded="false" />
+                <element signature="e#6877#6878#0" expanded="false" />
+                <element signature="e#6932#6933#0" expanded="false" />
+                <element signature="e#13118#13119#0" expanded="false" />
+                <element signature="e#13182#13183#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -159,6 +160,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -1402,7 +1404,7 @@
       <map>
         <entry key="$USER_HOME$/AndroidStudioProjects/Android" value="4312845714000" />
         <entry key="$USER_HOME$/AndroidStudioProjects/eevzdrop" value="4312804761000" />
-        <entry key="$PROJECT_DIR$" value="4369322309000" />
+        <entry key="$PROJECT_DIR$" value="4369487222000" />
       </map>
     </option>
     <option name="projectBuildClasspath">
@@ -1622,11 +1624,13 @@
                             <option value="$USER_HOME$/Library/Android/sdk/extras/android/m2repository/com/android/support/design/23.1.1/design-23.1.1.aar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.squareup.retrofit2/retrofit/2.0.0-beta4/739e00dea1f0ac04fdb9b6160d667e23cc50a791/retrofit-2.0.0-beta4.jar" />
                             <option value="$USER_HOME$/Library/Android/sdk/extras/google/m2repository/com/google/android/gms/play-services-location/8.4.0/play-services-location-8.4.0.aar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.squareup.retrofit2/converter-gson/2.0.0-beta4/de5935a367ba5e343e9df786ac8fc0c7d52b5f0c/converter-gson-2.0.0-beta4.jar" />
                             <option value="$USER_HOME$/Library/Android/sdk/extras/android/m2repository/com/android/support/support-v4/23.1.1/support-v4-23.1.1.aar" />
                             <option value="$USER_HOME$/Library/Android/sdk/extras/android/m2repository/com/android/support/recyclerview-v7/23.1.1/recyclerview-v7-23.1.1.aar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.squareup.okhttp3/okhttp/3.0.1/b34c1f2d993044656e87f88970b6818e99e886ba/okhttp-3.0.1.jar" />
                             <option value="$USER_HOME$/Library/Android/sdk/extras/google/m2repository/com/google/android/gms/play-services-base/8.4.0/play-services-base-8.4.0.aar" />
                             <option value="$USER_HOME$/Library/Android/sdk/extras/google/m2repository/com/google/android/gms/play-services-maps/8.4.0/play-services-maps-8.4.0.aar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.4/695b63d702f505b9b916e02272e3b6381bade7f/gson-2.4.jar" />
                             <option value="$USER_HOME$/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/23.1.1/support-annotations-23.1.1.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.squareup.okio/okio/1.6.0/98476622f10715998eacf9240d6b479f12c66143/okio-1.6.0.jar" />
                             <option value="$USER_HOME$/Library/Android/sdk/extras/google/m2repository/com/google/android/gms/play-services-basement/8.4.0/play-services-basement-8.4.0.aar" />
@@ -1775,9 +1779,12 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/pnpc/pavement/GoogleApiClientActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/pnpc/pavement/ReadingLooper.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/pnpc/pavement/MainActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/pnpc/pavement/PavementService.java" />
         <option value="$PROJECT_DIR$/app/build.gradle" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/pnpc/pavement/ServiceGenerator.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/pnpc/pavement/ReadingTask.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/pnpc/pavement/ReadingService.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/pnpc/pavement/Reading.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/pnpc/pavement/PavementService.java" />
       </list>
     </option>
   </component>
@@ -1820,9 +1827,6 @@
     </navigator>
     <panes>
       <pane id="Scratches" />
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
-      <pane id="ProjectPane" />
       <pane id="AndroidView">
         <subPane>
           <PATH>
@@ -1845,8 +1849,47 @@
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="pavement" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="pavement" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="pavement" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="pavement" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
+      <pane id="ProjectPane" />
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -2042,7 +2085,7 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3281027" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Android Model" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3299028" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.37945792" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
+      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.0" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4051355" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -2095,27 +2138,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$USER_HOME$/Library/Android/sdk/sources/android-23/android/location/LocationListener.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="43" column="9" selection-start-line="43" selection-start-column="9" selection-end-line="43" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Library/Android/sdk/sources/android-23/android/system/Os.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="206" column="0" selection-start-line="206" selection-start-column="0" selection-end-line="206" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Library/Android/sdk/sources/android-23/android/os/Process.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="808" column="0" selection-start-line="808" selection-start-column="0" selection-end-line="808" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$USER_HOME$/Library/Android/sdk/extras/android/m2repository/com/android/support/support-v4/23.1.1/support-v4-23.1.1-sources.jar!/android/support/v4/content/ContextCompat.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -2404,27 +2426,40 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/pnpc/pavement/MainActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="79" column="13" selection-start-line="79" selection-start-column="13" selection-end-line="79" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="26" column="0" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/Library/Android/sdk/sources/android-23/org/json/JSONObject.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="719" column="0" selection-start-line="719" selection-start-column="0" selection-end-line="719" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="e#0#29272#0" expanded="false" />
+            <element signature="imports" expanded="false" />
+            <element signature="e#4878#4879#0" expanded="false" />
+            <element signature="e#4915#4916#0" expanded="false" />
+            <element signature="e#5095#5096#0" expanded="false" />
+            <element signature="e#5163#5164#0" expanded="false" />
+            <element signature="e#7938#7939#0" expanded="false" />
+            <element signature="e#7982#7983#0" expanded="false" />
+            <element signature="e#13885#13886#0" expanded="false" />
+            <element signature="e#13935#13936#0" expanded="false" />
+            <element signature="e#14385#14386#0" expanded="false" />
+            <element signature="e#14440#14441#0" expanded="false" />
+            <element signature="e#14989#14990#0" expanded="false" />
+            <element signature="e#15036#15037#0" expanded="false" />
+            <element signature="e#15782#15783#0" expanded="false" />
+            <element signature="e#15828#15829#0" expanded="false" />
+            <element signature="e#16937#16938#0" expanded="false" />
+            <element signature="e#16987#16988#0" expanded="false" />
+            <element signature="e#18056#18057#0" expanded="false" />
+            <element signature="e#18094#18095#0" expanded="false" />
+            <element signature="e#19426#19427#0" expanded="false" />
+            <element signature="e#19466#19467#0" expanded="false" />
+            <element signature="e#20645#20646#0" expanded="false" />
+            <element signature="e#20687#20688#0" expanded="false" />
+            <element signature="e#23784#23785#0" expanded="false" />
+            <element signature="e#23841#23842#0" expanded="false" />
+            <element signature="e#24258#24259#0" expanded="false" />
+            <element signature="e#24304#24305#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -2433,42 +2468,91 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="249" column="0" selection-start-line="249" selection-start-column="0" selection-end-line="249" selection-end-column="0" />
           <folding>
-            <element signature="e#4071#4078#0" expanded="true" />
-            <element signature="e#4281#4282#0" expanded="true" />
-            <element signature="e#4310#4311#0" expanded="true" />
-            <element signature="e#6877#6878#0" expanded="true" />
-            <element signature="e#6932#6933#0" expanded="true" />
+            <element signature="e#0#13186#0" expanded="false" />
+            <element signature="imports" expanded="false" />
+            <element signature="e#4281#4282#0" expanded="false" />
+            <element signature="e#4310#4311#0" expanded="false" />
+            <element signature="e#6877#6878#0" expanded="false" />
+            <element signature="e#6932#6933#0" expanded="false" />
+            <element signature="e#13118#13119#0" expanded="false" />
+            <element signature="e#13182#13183#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/build.gradle">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-9.074074">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="28" column="62" selection-start-line="28" selection-start-column="62" selection-end-line="28" selection-end-column="62" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/pnpc/pavement/ReadingTask.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.19762258">
+          <caret line="54" column="0" selection-start-line="54" selection-start-column="0" selection-end-line="54" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5794948">
           <caret line="26" column="0" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/pnpc/pavement/MainActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.91084695">
+          <caret line="90" column="0" selection-start-line="90" selection-start-column="0" selection-end-line="90" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/pnpc/pavement/ServiceGenerator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.55423474">
+          <caret line="45" column="19" selection-start-line="45" selection-start-column="19" selection-end-line="45" selection-end-column="19" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1221#1841#0" expanded="true" />
+            <element signature="e#1840#1841#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/pnpc/pavement/PavementService.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="208" column="23" selection-start-line="208" selection-start-column="23" selection-end-line="208" selection-end-column="23" />
+          <caret line="87" column="83" selection-start-line="87" selection-start-column="83" selection-end-line="87" selection-end-column="83" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#4481#4482#0" expanded="true" />
+            <element signature="e#4508#4509#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/pnpc/pavement/ReadingService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="14" column="19" selection-start-line="14" selection-start-column="19" selection-end-line="14" selection-end-column="19" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/pnpc/pavement/ReadingTask.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/pnpc/pavement/Reading.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33660933">
-          <caret line="50" column="56" selection-start-line="50" selection-start-column="56" selection-end-line="50" selection-end-column="56" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1221#1436#0" expanded="true" />
-            <element signature="e#1435#1436#0" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="0.4205052">
+          <caret line="32" column="0" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
