@@ -71,7 +71,7 @@ public class PavementService extends Service implements com.google.android.gms.l
 
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         Sensor accelerometerSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        sensorManager.registerListener(this, accelerometerSensor, SensorManager.SENSOR_DELAY_NORMAL);
+        sensorManager.registerListener(this, accelerometerSensor, 500000);
 
         locationRequest = createLocationRequest();
         Log.i("network", "" + isOnline(this));
@@ -85,7 +85,7 @@ public class PavementService extends Service implements com.google.android.gms.l
             Log.i("GoogleAPIClient", "" + googleApiClient);
         }
 
-        readingService = ServiceGenerator.createService(ReadingService.class, "", "");
+        readingService = ServiceGenerator.createService(ReadingService.class, "peemster", "halsadick");
 
         return START_STICKY;
     }
@@ -143,12 +143,13 @@ public class PavementService extends Service implements com.google.android.gms.l
         endLat = location.getLatitude();
         endLng = location.getLongitude();
 
-        Call<Reading> call = readingService.createReading(startLat, startLng, endLat, endLng, xArray.toString(), yArray.toString(), zArray.toString(), RIDE_ID);
+        Reading reading = new Reading(startLat, startLng, endLat, endLng, xArray.toString(), yArray.toString(), zArray.toString(), RIDE_ID);
+        Call<Reading> call = readingService.createReading(reading);
         call.enqueue(new Callback<Reading>() {
 
                          @Override
                          public void onResponse(Call<Reading> call, retrofit2.Response<Reading> response) {
-                             Log.i("Retrofit onResponse", response.toString());
+                             Log.i("Retrofit onResponse", "successful" + response.body() + ";" + response.errorBody());
                          }
 
                          @Override
