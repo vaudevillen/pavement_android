@@ -85,7 +85,7 @@ public class PavementService extends Service implements com.google.android.gms.l
             Log.i("GoogleAPIClient", "" + googleApiClient);
         }
 
-        readingService = ServiceGenerator.createService(ReadingService.class, "peemster", "halsadick");
+        readingService = ServiceGenerator.createService(ReadingService.class, "", "");
 
         return START_STICKY;
     }
@@ -143,7 +143,9 @@ public class PavementService extends Service implements com.google.android.gms.l
         endLat = location.getLatitude();
         endLng = location.getLongitude();
 
-        Reading reading = new Reading(startLat, startLng, endLat, endLng, xArray.toString(), yArray.toString(), zArray.toString(), RIDE_ID);
+        JSONObject reading = makeReadingJson(startLat, startLng, endLat, endLng, xArray.toString(), yArray.toString(), zArray.toString());
+        Log.i("reading", "" + reading.toString());
+//        Call<Reading> call = readingService.createReading(startLat, startLng, endLat, endLng, xArray.toString(), yArray.toString(), zArray.toString(), RIDE_ID);
         Call<Reading> call = readingService.createReading(reading);
         call.enqueue(new Callback<Reading>() {
 
@@ -217,4 +219,24 @@ public class PavementService extends Service implements com.google.android.gms.l
     }
 
 
+    public JSONObject makeReadingJson(double startLat, double startLng, double endLat, double endLng, String xArray, String yArray, String zArray){
+        JSONObject readingJson = new JSONObject();
+
+        try {
+                readingJson.put("acceleration_x", xArray);
+                readingJson.put("acceleration_y", yArray);
+                readingJson.put("acceleration_z", zArray);
+                readingJson.put("start_lon", startLng);
+                readingJson.put("start_lat", startLat);
+                readingJson.put("end_lat", endLat);
+                readingJson.put("end_lat", endLng);
+                readingJson.put("ride_id", RIDE_ID);
+            } catch (JSONException e) {
+                  // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            Log.i("Json test", readingJson.toString());
+
+            return readingJson;
+        }
 }
