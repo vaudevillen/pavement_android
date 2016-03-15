@@ -2,10 +2,15 @@ package com.pnpc.pavement;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.HashMap;
+
 /**
 // * Created by jjshin on 3/10/16.
  */
 public class Reading {
+
+    @SerializedName("reading")
+    public HashMap reading;
 
     @SerializedName("start_lat")
     public double start_lat;
@@ -37,8 +42,10 @@ public class Reading {
     @SerializedName("end_time")
     public float end_time;
 
-    public Reading(double start_lat, double start_lon, double end_lat, double end_lon, String acceleration_x, String acceleration_y,
-                                 String acceleration_z, int ride_id) {
+    public Reading(HashMap reading) {
+
+//        double start_lat, double start_lon, double end_lat, double end_lon, String acceleration_x, String acceleration_y,
+//                String acceleration_z, int ride_id
         this.start_lat = start_lat;
         this.start_lon = start_lon;
         this.end_lat = end_lat;
