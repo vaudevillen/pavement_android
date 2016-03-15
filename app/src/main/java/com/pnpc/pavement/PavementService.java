@@ -16,7 +16,6 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
-import android.util.Base64;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -25,22 +24,12 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
 import java.util.ArrayList;
 
-import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.Field;
 
 /**
  * Created by jjshin on 2/21/16.
@@ -143,10 +132,7 @@ public class PavementService extends Service implements com.google.android.gms.l
         endLat = location.getLatitude();
         endLng = location.getLongitude();
 
-        JSONObject reading = makeReadingJson(startLat, startLng, endLat, endLng, xArray.toString(), yArray.toString(), zArray.toString());
-        Log.i("reading", "" + reading.toString());
-//        Call<Reading> call = readingService.createReading(startLat, startLng, endLat, endLng, xArray.toString(), yArray.toString(), zArray.toString(), RIDE_ID);
-        Call<Reading> call = readingService.createReading(reading);
+        Call<Reading> call = readingService.createReading(startLat, startLng, endLat, endLng, xArray.toString(), yArray.toString(), zArray.toString(), RIDE_ID);
         call.enqueue(new Callback<Reading>() {
 
                          @Override
@@ -218,25 +204,4 @@ public class PavementService extends Service implements com.google.android.gms.l
         return false;
     }
 
-
-    public JSONObject makeReadingJson(double startLat, double startLng, double endLat, double endLng, String xArray, String yArray, String zArray){
-        JSONObject readingJson = new JSONObject();
-
-        try {
-                readingJson.put("acceleration_x", xArray);
-                readingJson.put("acceleration_y", yArray);
-                readingJson.put("acceleration_z", zArray);
-                readingJson.put("start_lon", startLng);
-                readingJson.put("start_lat", startLat);
-                readingJson.put("end_lat", endLat);
-                readingJson.put("end_lat", endLng);
-                readingJson.put("ride_id", RIDE_ID);
-            } catch (JSONException e) {
-                  // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-            Log.i("Json test", readingJson.toString());
-
-            return readingJson;
-        }
 }
