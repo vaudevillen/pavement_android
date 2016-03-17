@@ -1,10 +1,6 @@
 package com.pnpc.pavement;
 
-import com.google.gson.annotations.SerializedName;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
 // * Created by jjshin on 3/10/16.
@@ -25,9 +21,7 @@ public class Reading {
     public float angle_y;
     public float angle_z;
 
-    public Reading(){
-
-    }
+    public Reading(){ }
 
     public double getStartLat() { return start_lat; }
 
