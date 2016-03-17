@@ -62,8 +62,6 @@ public class PavementService extends Service implements com.google.android.gms.l
     public int onStartCommand(Intent intent, int flags, int startId) {
 //        return super.onStartCommand(intent, flags, startId);
         Toast.makeText(this, "service starting", Toast.LENGTH_SHORT).show();
-        Date date = new Date();
-        Log.i("Date", date.getTime());
 
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         Sensor accelerometerSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
