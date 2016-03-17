@@ -26,11 +26,9 @@ import com.google.android.gms.location.LocationServices;
 
 import java.util.ArrayList;
 
-import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
 
 /**
  * Created by jjshin on 2/21/16.
@@ -52,10 +50,7 @@ public class PavementService extends Service implements com.google.android.gms.l
     Float angleY;
     Float angleZ;
     final static int RIDE_ID = 179;
-    Retrofit retrofit;
     ReadingService readingService;
-    public static OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
-
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
@@ -66,8 +61,8 @@ public class PavementService extends Service implements com.google.android.gms.l
         Sensor accelerometerSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         Sensor gyroscopeSensor = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
 
-        sensorManager.registerListener(this, accelerometerSensor, 1000000);
-        sensorManager.registerListener(this, gyroscopeSensor, 10000000);
+        sensorManager.registerListener(this, accelerometerSensor, 500000);
+        sensorManager.registerListener(this, gyroscopeSensor, 500000);
 
         locationRequest = createLocationRequest();
         Log.i("network", "" + isOnline(this));
@@ -143,31 +138,26 @@ public class PavementService extends Service implements com.google.android.gms.l
 
         endLat = location.getLatitude();
         endLng = location.getLongitude();
-//        Log.i("Reading", readingService.createReading(startLat, startLng, endLat, endLng, xArray.toString(), yArray.toString(), zArray.toString(), RIDE_ID).toString());
+
         xArray = trimArray(xArray);
         yArray = trimArray(yArray);
         zArray = trimArray(zArray);
 
         Reading reading = new Reading();
-        reading.setAccelerationX(xArray);
-        reading.setAccelerationY(yArray);
-        reading.setAccelerationZ(zArray);
+        reading.setAccelerations(xArray, yArray, zArray);
         reading.setEndLat(endLat);
         reading.setEndLon(endLng);
         reading.setStartLat(startLat);
         reading.setStartLon(startLng);
         reading.setRideId(RIDE_ID);
-        reading.setAngleX(angleX);
-        reading.setAngleY(angleY);
-        reading.setAngleZ(angleZ);
-//        Call<Reading> reading = readingService.createReading(startLat, startLng, endLat, endLng, xArray.toString(), yArray.toString(), zArray.toString(), RIDE_ID);
-//        Reading reading = new Reading(startLat, startLng, endLat, endLng, xArray.toString(), yArray.toString(), zArray.toString(), RIDE_ID);
+        reading.setAngles(angleX, angleY, angleZ);
+
         Call<Reading> call = readingService.postReading(reading);
         Log.i("Reading", call.toString());
         call.enqueue(new Callback<Reading>() {
             @Override
             public void onResponse(Call<Reading> call, Response<Reading> response) {
-                Log.i("Reading onResponse", "response: " + response.body() + "; " + response.errorBody());
+                Log.i("Reading onResponse", "response: onSuccess: " + response.body() + "; onError: " + response.errorBody());
 
             }
             @Override
@@ -222,10 +212,6 @@ public class PavementService extends Service implements com.google.android.gms.l
     }
 
     protected void clearArrays(){
-        Log.i("Array x", "" + xArray.size());
-        Log.i("Array y", "" + yArray.size());
-        Log.i("Array z", "" + zArray.size());
-
         xArray.clear();
         yArray.clear();
         zArray.clear();
