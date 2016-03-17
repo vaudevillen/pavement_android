@@ -143,25 +143,20 @@ public class PavementService extends Service implements com.google.android.gms.l
 
         endLat = location.getLatitude();
         endLng = location.getLongitude();
-//        Log.i("Reading", readingService.createReading(startLat, startLng, endLat, endLng, xArray.toString(), yArray.toString(), zArray.toString(), RIDE_ID).toString());
+
         xArray = trimArray(xArray);
         yArray = trimArray(yArray);
         zArray = trimArray(zArray);
 
         Reading reading = new Reading();
-        reading.setAccelerationX(xArray);
-        reading.setAccelerationY(yArray);
-        reading.setAccelerationZ(zArray);
+        reading.setAccelerations(xArray, yArray, zArray);
         reading.setEndLat(endLat);
         reading.setEndLon(endLng);
         reading.setStartLat(startLat);
         reading.setStartLon(startLng);
         reading.setRideId(RIDE_ID);
-        reading.setAngleX(angleX);
-        reading.setAngleY(angleY);
-        reading.setAngleZ(angleZ);
-//        Call<Reading> reading = readingService.createReading(startLat, startLng, endLat, endLng, xArray.toString(), yArray.toString(), zArray.toString(), RIDE_ID);
-//        Reading reading = new Reading(startLat, startLng, endLat, endLng, xArray.toString(), yArray.toString(), zArray.toString(), RIDE_ID);
+        reading.setAngles(angleX, angleY, angleZ);
+
         Call<Reading> call = readingService.postReading(reading);
         Log.i("Reading", call.toString());
         call.enqueue(new Callback<Reading>() {
