@@ -25,6 +25,7 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
@@ -61,13 +62,15 @@ public class PavementService extends Service implements com.google.android.gms.l
     public int onStartCommand(Intent intent, int flags, int startId) {
 //        return super.onStartCommand(intent, flags, startId);
         Toast.makeText(this, "service starting", Toast.LENGTH_SHORT).show();
+        Date date = new Date();
+        Log.i("Date", date.getTime());
 
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         Sensor accelerometerSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         Sensor gyroscopeSensor = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
 
-        sensorManager.registerListener(this, accelerometerSensor, 1000000);
-        sensorManager.registerListener(this, gyroscopeSensor, 10000000);
+        sensorManager.registerListener(this, accelerometerSensor, 500000);
+        sensorManager.registerListener(this, gyroscopeSensor, 500000);
 
         locationRequest = createLocationRequest();
         Log.i("network", "" + isOnline(this));
@@ -162,7 +165,7 @@ public class PavementService extends Service implements com.google.android.gms.l
         call.enqueue(new Callback<Reading>() {
             @Override
             public void onResponse(Call<Reading> call, Response<Reading> response) {
-                Log.i("Reading onResponse", "response: " + response.body() + "; " + response.errorBody());
+                Log.i("Reading onResponse", "response: onSuccess: " + response.body() + "; onError: " + response.errorBody());
 
             }
             @Override
@@ -217,10 +220,6 @@ public class PavementService extends Service implements com.google.android.gms.l
     }
 
     protected void clearArrays(){
-        Log.i("Array x", "" + xArray.size());
-        Log.i("Array y", "" + yArray.size());
-        Log.i("Array z", "" + zArray.size());
-
         xArray.clear();
         yArray.clear();
         zArray.clear();
