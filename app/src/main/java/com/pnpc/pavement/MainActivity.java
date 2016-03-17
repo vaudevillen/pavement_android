@@ -28,9 +28,6 @@ public class MainActivity extends AppCompatActivity {
     };
     private static final int LOCATION_REQUEST = 1337;
     Button serviceButton;
-    private TextView locationView;
-    private TextView lngView;
-    private TextView latView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,13 +46,10 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        locationView=(TextView)findViewById(R.id.location_view);
-
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             Log.i("GPS permission code", "Check self permission: " + checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION));
         }
-        updateLocationView();
 
         //Checking SDK. If above 6.0, checks location permission. If not granted, requests it.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
@@ -69,13 +63,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent serviceIntent = new Intent(MainActivity.this, PavementService.class);
-                if (serviceButton.getText() == "Start Service") {
+                if (serviceButton.getText() == "Start") {
                     startService(serviceIntent);
-                    serviceButton.setText("Stop Service");
+                    serviceButton.setText("Stop");
                     Log.d("PavementService", "startService called");
                 } else {
                     stopService(serviceIntent);
-                    serviceButton.setText("Start Service");
+                    serviceButton.setText("Start");
                 }
             }
         });
@@ -114,7 +108,6 @@ public class MainActivity extends AppCompatActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if(requestCode == LOCATION_REQUEST){
             if(hasLocationPermission()){
-                updateLocationView();
             }
         }
     }
@@ -126,8 +119,6 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
     }
-    private void updateLocationView(){
-        locationView.setText("Access fine location permission granted: " + String.valueOf(hasLocationPermission()));
-    }
+
 
 }
