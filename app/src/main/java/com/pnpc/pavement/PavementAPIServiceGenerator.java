@@ -14,7 +14,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 /**
  * Created by jjshin on 3/10/16.
  */
-public class ServiceGenerator {
+public class PavementAPIServiceGenerator {
 
     public static final String API_BASE_URL = "https://project-pavement.herokuapp.com/";
 
