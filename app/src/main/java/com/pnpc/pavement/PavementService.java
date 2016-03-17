@@ -163,22 +163,22 @@ public class PavementService extends Service implements com.google.android.gms.l
         reading.setAngles(angleX, angleY, angleZ);
         reading.setStartTime(startTime);
         reading.setEndTime(endTime);
-//
+
         Log.i("reading", "" + reading.getRideId());
-//        Call<Reading> call = pavementAPIService.postReading(reading);
-//        call.enqueue(new Callback<Reading>() {
-//            @Override
-//            public void onResponse(Call<Reading> call, Response<Reading> response) {
-//                Log.i("Reading onResponse", "response: onSuccess: " + response.body() + "; onError: " + response.errorBody());
-//
-//            }
-//
-//            @Override
-//            public void onFailure(Call<Reading> call, Throwable t) {
-//                Log.i("Reading onFailure", "Well, that didn't work");
-//
-//            }
-//        });
+        Call<Reading> call = pavementAPIService.postReading(reading);
+        call.enqueue(new Callback<Reading>() {
+            @Override
+            public void onResponse(Call<Reading> call, Response<Reading> response) {
+                Log.i("Reading onResponse", "response: onSuccess: " + response.body() + "; onError: " + response.errorBody());
+
+            }
+
+            @Override
+            public void onFailure(Call<Reading> call, Throwable t) {
+                Log.i("Reading onFailure", "Well, that didn't work");
+
+            }
+        });
 
         startLat = endLat;
         startLng = endLng;
