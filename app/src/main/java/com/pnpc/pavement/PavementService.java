@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 
 /**
@@ -47,6 +48,9 @@ public class PavementService extends Service implements com.google.android.gms.l
     Double endLat;
     Double startLng;
     Double endLng;
+    Float angleX;
+    Float angleY;
+    Float angleZ;
     final static int RIDE_ID = 179;
     Retrofit retrofit;
     ReadingService readingService;
@@ -60,7 +64,10 @@ public class PavementService extends Service implements com.google.android.gms.l
 
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         Sensor accelerometerSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        sensorManager.registerListener(this, accelerometerSensor, 500000);
+        Sensor gyroscopeSensor = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
+
+        sensorManager.registerListener(this, accelerometerSensor, 1000000);
+        sensorManager.registerListener(this, gyroscopeSensor, 10000000);
 
         locationRequest = createLocationRequest();
         Log.i("network", "" + isOnline(this));
@@ -106,6 +113,11 @@ public class PavementService extends Service implements com.google.android.gms.l
             yArray.add(event.values[1]);
             zArray.add(event.values[2]);
         }
+        else if(event.sensor.getType() == Sensor.TYPE_GYROSCOPE){
+            angleX = event.values[0];
+            angleY = event.values[1];
+            angleZ = event.values[2];
+        }
     }
 
     @Override
@@ -131,20 +143,39 @@ public class PavementService extends Service implements com.google.android.gms.l
 
         endLat = location.getLatitude();
         endLng = location.getLongitude();
+//        Log.i("Reading", readingService.createReading(startLat, startLng, endLat, endLng, xArray.toString(), yArray.toString(), zArray.toString(), RIDE_ID).toString());
+        xArray = trimArray(xArray);
+        yArray = trimArray(yArray);
+        zArray = trimArray(zArray);
 
-        Call<Reading> call = readingService.createReading(startLat, startLng, endLat, endLng, xArray.toString(), yArray.toString(), zArray.toString(), RIDE_ID);
+        Reading reading = new Reading();
+        reading.setAccelerationX(xArray);
+        reading.setAccelerationY(yArray);
+        reading.setAccelerationZ(zArray);
+        reading.setEndLat(endLat);
+        reading.setEndLon(endLng);
+        reading.setStartLat(startLat);
+        reading.setStartLon(startLng);
+        reading.setRideId(RIDE_ID);
+        reading.setAngleX(angleX);
+        reading.setAngleY(angleY);
+        reading.setAngleZ(angleZ);
+//        Call<Reading> reading = readingService.createReading(startLat, startLng, endLat, endLng, xArray.toString(), yArray.toString(), zArray.toString(), RIDE_ID);
+//        Reading reading = new Reading(startLat, startLng, endLat, endLng, xArray.toString(), yArray.toString(), zArray.toString(), RIDE_ID);
+        Call<Reading> call = readingService.postReading(reading);
+        Log.i("Reading", call.toString());
         call.enqueue(new Callback<Reading>() {
+            @Override
+            public void onResponse(Call<Reading> call, Response<Reading> response) {
+                Log.i("Reading onResponse", "response: " + response.body() + "; " + response.errorBody());
 
-                         @Override
-                         public void onResponse(Call<Reading> call, retrofit2.Response<Reading> response) {
-                             Log.i("Retrofit onResponse", "successful" + response.body() + ";" + response.errorBody());
-                         }
+            }
+            @Override
+            public void onFailure(Call<Reading> call, Throwable t) {
+                Log.i("Reading onFailure", "Well, that didn't work");
 
-                         @Override
-                         public void onFailure(Call<Reading> call, Throwable t) {
-                             Log.i("Retrofit onFailure", "Well, that didn't work");
-                         }
-                     });
+            }
+        });
         clearArrays();
 
         startLat = endLat;
@@ -175,7 +206,7 @@ public class PavementService extends Service implements com.google.android.gms.l
             Log.i("GPS startupdates", "Somehow the permissions are missing");
             return;
         }
-        Log.i("GPS startUpdates", "updates request about to be started");
+        Log.i("GPS startUpdates", "startLocationUpdates called");
         LocationServices.FusedLocationApi.requestLocationUpdates(
                 googleApiClient, locationRequest, this);
     }
@@ -184,13 +215,17 @@ public class PavementService extends Service implements com.google.android.gms.l
     }
     protected LocationRequest createLocationRequest() {
         LocationRequest mLocationRequest = new LocationRequest();
-        mLocationRequest.setInterval(1000);
-        mLocationRequest.setFastestInterval(900);
+        mLocationRequest.setInterval(500);
+        mLocationRequest.setFastestInterval(500);
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         return mLocationRequest;
     }
 
     protected void clearArrays(){
+        Log.i("Array x", "" + xArray.size());
+        Log.i("Array y", "" + yArray.size());
+        Log.i("Array z", "" + zArray.size());
+
         xArray.clear();
         yArray.clear();
         zArray.clear();
@@ -202,6 +237,21 @@ public class PavementService extends Service implements com.google.android.gms.l
             return true;
         }
         return false;
+    }
+
+    public ArrayList<Float> trimArray(ArrayList<Float> array){
+        int arrayCount = array.size();
+        ArrayList<Float> newArray = new ArrayList<Float>();
+        if(arrayCount > 10){
+            for(int i = arrayCount - 10; i < arrayCount; i ++){
+                newArray.add(array.get(i));
+            }
+            Log.i("array new", "" + newArray.size());
+            return newArray;
+        }
+        else{
+            return array;
+        }
     }
 
 }
