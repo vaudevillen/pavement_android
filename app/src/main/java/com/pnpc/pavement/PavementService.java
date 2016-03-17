@@ -25,7 +25,6 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
@@ -53,10 +52,7 @@ public class PavementService extends Service implements com.google.android.gms.l
     Float angleY;
     Float angleZ;
     final static int RIDE_ID = 179;
-    Retrofit retrofit;
     ReadingService readingService;
-    public static OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
-
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
