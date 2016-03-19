@@ -57,7 +57,7 @@ public class PavementService extends Service implements com.google.android.gms.l
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 //        return super.onStartCommand(intent, flags, startId);
-        Toast.makeText(this, "service starting", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Pavement service starting", Toast.LENGTH_SHORT).show();
 
 
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);

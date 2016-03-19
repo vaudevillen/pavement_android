@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -13,8 +14,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
+import android.widget.ImageView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,7 +27,8 @@ public class MainActivity extends AppCompatActivity {
             Manifest.permission.ACCESS_FINE_LOCATION
     };
     private static final int LOCATION_REQUEST = 1337;
-    Button serviceButton;
+    ImageView serviceButton;
+    boolean serviceStarted = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,16 +37,9 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
-
+        if(savedInstanceState != null){
+            serviceStarted = savedInstanceState.getBoolean("serviceStarted");
+        }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             Log.i("GPS permission code", "Check self permission: " + checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION));
@@ -57,19 +51,21 @@ public class MainActivity extends AppCompatActivity {
                 requestPermissions(LOCATION_PERMS, LOCATION_REQUEST);
             }
         }
-        serviceButton = (Button) findViewById(R.id.service_button);
+        serviceButton = (ImageView) findViewById(R.id.service_button);
 
         serviceButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent serviceIntent = new Intent(MainActivity.this, PavementService.class);
-                if (serviceButton.getText() == "Start") {
+                if (serviceStarted == false) {
                     startService(serviceIntent);
-                    serviceButton.setText("Stop");
+                    serviceStarted = true;
+                    setServiceButtonImage();
                     Log.d("PavementService", "startService called");
                 } else {
                     stopService(serviceIntent);
-                    serviceButton.setText("Start");
+                    serviceStarted = false;
+                    setServiceButtonImage();
                 }
             }
         });
@@ -120,5 +116,18 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+        super.onSaveInstanceState(outState, outPersistentState);
+        outState.putBoolean("serviceStarted", serviceStarted);
+    }
 
+    public void setServiceButtonImage(){
+        if(serviceStarted == false){
+            serviceButton.setImageResource(R.drawable.toggle);
+        }
+        else{
+            serviceButton.setImageResource(R.drawable.stop);
+        }
+    }
 }
