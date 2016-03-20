@@ -79,23 +79,23 @@ public class PavementService extends Service implements com.google.android.gms.l
             Log.i("GoogleAPIClient", "" + googleApiClient);
         }
 
-        pavementAPIService = PavementAPIServiceGenerator.createService(PavementAPIService.class, "", "");
+        pavementAPIService = PavementAPIServiceGenerator.createService(PavementAPIService.class, "peemster", "halsadick");
         Ride ride = new Ride();
         ride.setStartTime(System.currentTimeMillis()/1000);
-        Call<Ride> call = pavementAPIService.createRide(ride);
-        call.enqueue(new Callback<Ride>() {
-            @Override
-            public void onResponse(Call<Ride> call, Response<Ride> response) {
-                Log.i("Ride onResponse", "Ride: onSuccess: " + response.body() + "; onError: " + response.errorBody());
-                Ride savedRide = response.body();
-                rideId = savedRide.getId();
-            }
-
-            @Override
-            public void onFailure(Call<Ride> call, Throwable t) {
-                Log.i("Ride onFailure", "Create ride failed");
-            }
-        });
+//        Call<Ride> call = pavementAPIService.createRide(ride);
+//        call.enqueue(new Callback<Ride>() {
+//            @Override
+//            public void onResponse(Call<Ride> call, Response<Ride> response) {
+//                Log.i("Ride onResponse", "Ride: onSuccess: " + response.body() + "; onError: " + response.errorBody());
+//                Ride savedRide = response.body();
+//                rideId = savedRide.getId();
+//            }
+//
+//            @Override
+//            public void onFailure(Call<Ride> call, Throwable t) {
+//                Log.i("Ride onFailure", "Create ride failed");
+//            }
+//        });
 
         return START_STICKY;
     }
@@ -154,7 +154,7 @@ public class PavementService extends Service implements com.google.android.gms.l
         zArray = trimArray(zArray);
 
         Reading reading = new Reading();
-        reading.setRideId(rideId);
+//        reading.setRideId(rideId);
         reading.setAccelerations(xArray, yArray, zArray);
         reading.setEndLat(endLat);
         reading.setEndLon(endLng);
@@ -164,21 +164,21 @@ public class PavementService extends Service implements com.google.android.gms.l
         reading.setStartTime(startTime);
         reading.setEndTime(endTime);
 
-        Log.i("reading", "" + reading.getRideId());
-        Call<Reading> call = pavementAPIService.postReading(reading);
-        call.enqueue(new Callback<Reading>() {
-            @Override
-            public void onResponse(Call<Reading> call, Response<Reading> response) {
-                Log.i("Reading onResponse", "response: onSuccess: " + response.body() + "; onError: " + response.errorBody());
-
-            }
-
-            @Override
-            public void onFailure(Call<Reading> call, Throwable t) {
-                Log.i("Reading onFailure", "Well, that didn't work");
-
-            }
-        });
+//        Log.i("reading", "" + reading.getRideId());
+//        Call<Reading> call = pavementAPIService.postReading(reading);
+//        call.enqueue(new Callback<Reading>() {
+//            @Override
+//            public void onResponse(Call<Reading> call, Response<Reading> response) {
+//                Log.i("Reading onResponse", "response: onSuccess: " + response.body() + "; onError: " + response.errorBody());
+//
+//            }
+//
+//            @Override
+//            public void onFailure(Call<Reading> call, Throwable t) {
+//                Log.i("Reading onFailure", "Well, that didn't work");
+//
+//            }
+//        });
 
         startLat = endLat;
         startLng = endLng;

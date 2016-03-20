@@ -6,8 +6,6 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.PersistableBundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -28,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
     };
     private static final int LOCATION_REQUEST = 1337;
     ImageView serviceButton;
-    boolean serviceStarted = false;
+    boolean serviceStarted;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         if(savedInstanceState != null){
+            Log.i("savedInstance", "savedInstanceState not null");
+            Log.i("savedInstance", "serviceStarted: " + savedInstanceState.getBoolean("serviceStarted"));
             serviceStarted = savedInstanceState.getBoolean("serviceStarted");
         }
 
@@ -117,9 +117,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
-        super.onSaveInstanceState(outState, outPersistentState);
-        outState.putBoolean("serviceStarted", serviceStarted);
+    protected void onSaveInstanceState(Bundle outState) {
+        if(serviceStarted == true){
+            outState.putBoolean("serviceStarted", serviceStarted);
+        }
+        Log.i("onSavedInstanceState", "outstate: serviceStarted " + serviceStarted);
+        super.onSaveInstanceState(outState);
     }
 
     public void setServiceButtonImage(){
@@ -129,5 +132,14 @@ public class MainActivity extends AppCompatActivity {
         else{
             serviceButton.setImageResource(R.drawable.stop);
         }
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        serviceStarted = savedInstanceState.getBoolean("serviceStarted");
+        if(serviceStarted == true){
+            setServiceButtonImage();
+        }
+        super.onRestoreInstanceState(savedInstanceState);
     }
 }
