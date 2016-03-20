@@ -154,7 +154,7 @@ public class PavementService extends Service implements com.google.android.gms.l
         zArray = trimArray(zArray);
 
         Reading reading = new Reading();
-        reading.setRideId(rideId);
+//        reading.setRideId(rideId);
         reading.setAccelerations(xArray, yArray, zArray);
         reading.setEndLat(endLat);
         reading.setEndLon(endLng);
