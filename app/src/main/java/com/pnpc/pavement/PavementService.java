@@ -75,7 +75,7 @@ public class PavementService extends Service implements com.google.android.gms.l
                     .addOnConnectionFailedListener(this)
                     .addApi(LocationServices.API)
                     .build();
-            googleApiClient.connect();
+
             Log.i("GoogleAPIClient", "" + googleApiClient);
         }
 
@@ -89,6 +89,8 @@ public class PavementService extends Service implements com.google.android.gms.l
                 Log.i("Ride onResponse", "Ride: onSuccess: " + response.body() + "; onError: " + response.errorBody());
                 Ride savedRide = response.body();
                 rideId = savedRide.getId();
+                //googleApiClient connect called here to make sure rideId isn't null
+                googleApiClient.connect();
             }
 
             @Override
@@ -154,7 +156,7 @@ public class PavementService extends Service implements com.google.android.gms.l
         zArray = trimArray(zArray);
 
         Reading reading = new Reading();
-//        reading.setRideId(rideId);
+        reading.setRideId(rideId);
         reading.setAccelerations(xArray, yArray, zArray);
         reading.setEndLat(endLat);
         reading.setEndLon(endLng);
