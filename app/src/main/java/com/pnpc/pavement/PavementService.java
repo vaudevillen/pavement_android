@@ -80,22 +80,23 @@ public class PavementService extends Service implements com.google.android.gms.l
                     .addOnConnectionFailedListener(this)
                     .addApi(LocationServices.API)
                     .build();
-
-            Log.i("GoogleAPIClient", "" + googleApiClient);
         }
 
         pavementAPIService = PavementAPIServiceGenerator.createService(PavementAPIService.class, "peemster", "halsadick");
-        Ride ride = new Ride();
+        final Ride ride = new Ride();
         ride.setStartTime(System.currentTimeMillis() / 1000);
         Call<Ride> createRideCall = pavementAPIService.createRide(ride);
+        Log.i("Ride", "id" + ride.getId() + ", calibration" + ride.getCalibrationId() + ", endTime " + ride.getEndTime() + ", scoreboard" + ride.getScoreboardId() + ", startTime" + ride.getStartTime());
         createRideCall.enqueue(new Callback<Ride>() {
             @Override
             public void onResponse(Call<Ride> call, Response<Ride> response) {
                 Log.i("createRide onResponse", "Ride: onSuccess: " + response.body() + "; onError: " + response.errorBody());
                 Ride savedRide = response.body();
                 rideId = savedRide.getId();
-                getCalibrationAndScoreboardIds();
-                setCalibrationAndScoreboardIds();
+                updateIds();
+                ride.setCalibrationId(calibrationId);
+                ride.setScoreboardId(scoreboardId);
+                putRideRequest(rideId, ride);
                 //googleApiClient connect called here to make sure rideId isn't null
                 googleApiClient.connect();
             }
@@ -105,24 +106,7 @@ public class PavementService extends Service implements com.google.android.gms.l
                 Log.i("createRide onFailure", "Create ride failed");
             }
         });
-//        ride.setCalibrationId(calibrationId);
-//        ride.setScoreboardId(scoreboardId);
-//
-//        Call<Ride> calibrationAndScoreboardCall = pavementAPIService.putRide(ride);
-//        calibrationAndScoreboardCall.enqueue(new Callback<Ride>() {
-//            @Override
-//            public void onResponse(Call<Ride> call, Response<Ride> response) {
-//                Log.i("putRide onResponse", "Ride: onSuccess: " + response.body() + "; onError: " + response.errorBody());
-//                Ride savedRide = response.body();
-//                int savedCalibrationId = savedRide.getCalibrationId();
-//                Log.i("CalibrationID", "" + savedCalibrationId);
-//            }
-//
-//            @Override
-//            public void onFailure(Call<Ride> call, Throwable t) {
-//                Log.i("putRide onFailure", "put ride failed");
-//            }
-//        });
+
         return START_STICKY;
     }
 
@@ -173,7 +157,7 @@ public class PavementService extends Service implements com.google.android.gms.l
         endLat = location.getLatitude();
         endLng = location.getLongitude();
 
-        endTime = System.currentTimeMillis();
+        endTime = System.currentTimeMillis()/1000;
 
         xArray = trimArray(xArray);
         yArray = trimArray(yArray);
@@ -190,21 +174,9 @@ public class PavementService extends Service implements com.google.android.gms.l
         reading.setStartTime(startTime);
         reading.setEndTime(endTime);
 
+        postReadingRequest(reading);
         Log.i("reading", "" + reading.getRideId());
-        Call<Reading> call = pavementAPIService.postReading(reading);
-        call.enqueue(new Callback<Reading>() {
-            @Override
-            public void onResponse(Call<Reading> call, Response<Reading> response) {
-                Log.i("Reading onResponse", "response: onSuccess: " + response.body() + "; onError: " + response.errorBody());
-            }
-
-            @Override
-            public void onFailure(Call<Reading> call, Throwable t) {
-                Log.i("Reading onFailure", "Well, that didn't work");
-
-            }
-        });
-
+        
         startLat = endLat;
         startLng = endLng;
 
@@ -283,6 +255,7 @@ public class PavementService extends Service implements com.google.android.gms.l
     public void getCalibrationAndScoreboardIds(){
         calibrationId = sp.getInt("calibration_id", 0);
         scoreboardId = sp.getInt("scoreboard_id", 0);
+        Log.i("getcalibrationandscoreboard", "calibration_id: " + calibrationId);
     }
     public void setCalibrationAndScoreboardIds(){
         if(calibrationId == 0){
@@ -296,5 +269,45 @@ public class PavementService extends Service implements com.google.android.gms.l
             editor.putInt("scoreboard_id", scoreboardId);
         }
     }
+
+    public void updateIds(){
+        getCalibrationAndScoreboardIds();
+        setCalibrationAndScoreboardIds();
+    }
+
+    public void putRideRequest(int id, Ride ride){
+        Log.i("putRide", "putRideRequest called");
+        Call<Ride> calibrationAndScoreboardCall = pavementAPIService.putRide(id, ride);
+        calibrationAndScoreboardCall.enqueue(new Callback<Ride>() {
+            @Override
+            public void onResponse(Call<Ride> call, Response<Ride> response) {
+                Log.i("putRide onResponse", "Ride: onSuccess: " + response.body() + "; onError: " + response.errorBody());
+                Ride savedRide = response.body();
+                int savedCalibrationId = savedRide.getCalibrationId();
+                Log.i("CalibrationID", "" + savedCalibrationId);
+            }
+
+            @Override
+            public void onFailure(Call<Ride> call, Throwable t) {
+                Log.i("putRide onFailure", "put ride failed");
+            }
+        });
+    }
+
+    public void postReadingRequest(Reading reading){
+        Call<Reading> call = pavementAPIService.postReading(reading);
+        call.enqueue(new Callback<Reading>() {
+            @Override
+            public void onResponse(Call<Reading> call, Response<Reading> response) {
+                Log.i("Reading onResponse", "response: onSuccess: " + response.body() + "; onError: " + response.errorBody());
+            }
+
+            @Override
+            public void onFailure(Call<Reading> call, Throwable t) {
+                Log.i("Reading onFailure", "Well, that didn't work");
+            }
+        });
+    }
+
 
 }

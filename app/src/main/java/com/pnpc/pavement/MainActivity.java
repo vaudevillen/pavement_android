@@ -17,7 +17,6 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String[] INITIAL_PERMS = {
             Manifest.permission.ACCESS_FINE_LOCATION,
-            Manifest.permission.READ_CONTACTS
     };
 
     private static final String[] LOCATION_PERMS = {
