@@ -7,17 +7,29 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 
 /**
  * Created by jjshin on 3/21/16.
  */
 public class RecalibrateActivity extends AppCompatActivity {
 
+    ImageView recalibrateButton;
+
     @Override
     public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
         super.onCreate(savedInstanceState, persistentState);
+        setContentView(R.layout.recalibrate_activity);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        recalibrateButton = (ImageView) findViewById(R.id.recalibrate_button);
+        recalibrateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 
     @Override
