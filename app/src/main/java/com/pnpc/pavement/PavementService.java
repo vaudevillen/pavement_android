@@ -37,7 +37,7 @@ import retrofit2.Response;
  */
 public class PavementService extends Service implements com.google.android.gms.location.LocationListener, SensorEventListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
-    SharedPreferences sp;
+    SharedPreferences sharedPreferences;
     SensorManager sensorManager;
     LocationManager locManager;
     GoogleApiClient googleApiClient;
@@ -64,7 +64,7 @@ public class PavementService extends Service implements com.google.android.gms.l
 //        return super.onStartCommand(intent, flags, startId);
         Toast.makeText(this, "Pavement service starting", Toast.LENGTH_SHORT).show();
 
-        sp = PreferenceManager.getDefaultSharedPreferences(this);
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         Sensor accelerometerSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         Sensor gyroscopeSensor = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
@@ -97,7 +97,7 @@ public class PavementService extends Service implements com.google.android.gms.l
                 ride.setCalibrationId(calibrationId);
                 ride.setScoreboardId(scoreboardId);
                 putRideRequest(rideId, ride);
-                //googleApiClient connect called here to make sure rideId isn't null
+//                googleApiClient connect called here to make sure rideId isn't null
                 googleApiClient.connect();
             }
 
@@ -176,7 +176,7 @@ public class PavementService extends Service implements com.google.android.gms.l
 
         postReadingRequest(reading);
         Log.i("reading", "" + reading.getRideId());
-        
+
         startLat = endLat;
         startLng = endLng;
 
@@ -253,21 +253,23 @@ public class PavementService extends Service implements com.google.android.gms.l
     }
 
     public void getCalibrationAndScoreboardIds(){
-        calibrationId = sp.getInt("calibration_id", 0);
-        scoreboardId = sp.getInt("scoreboard_id", 0);
+        calibrationId = sharedPreferences.getInt("calibration_id", 0);
+        scoreboardId = sharedPreferences.getInt("scoreboard_id", 0);
         Log.i("getcalibrationandscoreboard", "calibration_id: " + calibrationId);
+        Log.i("getcalibrationandscoreboard", "scoreboard_id: " + scoreboardId);
+
     }
     public void setCalibrationAndScoreboardIds(){
+        SharedPreferences.Editor editor = sharedPreferences.edit();
         if(calibrationId == 0){
             calibrationId = rideId;
-            SharedPreferences.Editor editor = sp.edit();
             editor.putInt("calibration_id", calibrationId);
         }
         if(scoreboardId == 0){
             scoreboardId = rideId;
-            SharedPreferences.Editor editor = sp.edit();
             editor.putInt("scoreboard_id", scoreboardId);
         }
+        editor.commit();
     }
 
     public void updateIds(){
