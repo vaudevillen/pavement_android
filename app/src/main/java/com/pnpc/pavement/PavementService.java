@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -14,6 +15,7 @@ import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
@@ -35,11 +37,14 @@ import retrofit2.Response;
  */
 public class PavementService extends Service implements com.google.android.gms.location.LocationListener, SensorEventListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
+    SharedPreferences sharedPreferences;
     SensorManager sensorManager;
     LocationManager locManager;
     GoogleApiClient googleApiClient;
     PavementAPIService pavementAPIService;
     LocationRequest locationRequest;
+    int calibrationId;
+    int scoreboardId;
     ArrayList<Float> xArray = new ArrayList<>();
     ArrayList<Float> yArray = new ArrayList<>();
     ArrayList<Float> zArray = new ArrayList<>();
@@ -59,7 +64,7 @@ public class PavementService extends Service implements com.google.android.gms.l
 //        return super.onStartCommand(intent, flags, startId);
         Toast.makeText(this, "Pavement service starting", Toast.LENGTH_SHORT).show();
 
-
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         Sensor accelerometerSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         Sensor gyroscopeSensor = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
@@ -75,27 +80,30 @@ public class PavementService extends Service implements com.google.android.gms.l
                     .addOnConnectionFailedListener(this)
                     .addApi(LocationServices.API)
                     .build();
-
-            Log.i("GoogleAPIClient", "" + googleApiClient);
         }
 
-        pavementAPIService = PavementAPIServiceGenerator.createService(PavementAPIService.class, "", "");
-        Ride ride = new Ride();
-        ride.setStartTime(System.currentTimeMillis()/1000);
-        Call<Ride> call = pavementAPIService.createRide(ride);
-        call.enqueue(new Callback<Ride>() {
+        pavementAPIService = PavementAPIServiceGenerator.createService(PavementAPIService.class, "peemster", "halsadick");
+        final Ride ride = new Ride();
+        ride.setStartTime(System.currentTimeMillis() / 1000);
+        Call<Ride> createRideCall = pavementAPIService.createRide(ride);
+        Log.i("Ride", "id" + ride.getId() + ", calibration" + ride.getCalibrationId() + ", endTime " + ride.getEndTime() + ", scoreboard" + ride.getScoreboardId() + ", startTime" + ride.getStartTime());
+        createRideCall.enqueue(new Callback<Ride>() {
             @Override
             public void onResponse(Call<Ride> call, Response<Ride> response) {
-                Log.i("Ride onResponse", "Ride: onSuccess: " + response.body() + "; onError: " + response.errorBody());
+                Log.i("createRide onResponse", "Ride: onSuccess: " + response.body() + "; onError: " + response.errorBody());
                 Ride savedRide = response.body();
                 rideId = savedRide.getId();
-                //googleApiClient connect called here to make sure rideId isn't null
+                updateIds();
+                ride.setCalibrationId(calibrationId);
+                ride.setScoreboardId(scoreboardId);
+                putRideRequest(rideId, ride);
+//                googleApiClient connect called here to make sure rideId isn't null
                 googleApiClient.connect();
             }
 
             @Override
             public void onFailure(Call<Ride> call, Throwable t) {
-                Log.i("Ride onFailure", "Create ride failed");
+                Log.i("createRide onFailure", "Create ride failed");
             }
         });
 
@@ -149,7 +157,7 @@ public class PavementService extends Service implements com.google.android.gms.l
         endLat = location.getLatitude();
         endLng = location.getLongitude();
 
-        endTime = System.currentTimeMillis();
+        endTime = System.currentTimeMillis()/1000;
 
         xArray = trimArray(xArray);
         yArray = trimArray(yArray);
@@ -166,21 +174,8 @@ public class PavementService extends Service implements com.google.android.gms.l
         reading.setStartTime(startTime);
         reading.setEndTime(endTime);
 
+        postReadingRequest(reading);
         Log.i("reading", "" + reading.getRideId());
-        Call<Reading> call = pavementAPIService.postReading(reading);
-        call.enqueue(new Callback<Reading>() {
-            @Override
-            public void onResponse(Call<Reading> call, Response<Reading> response) {
-                Log.i("Reading onResponse", "response: onSuccess: " + response.body() + "; onError: " + response.errorBody());
-
-            }
-
-            @Override
-            public void onFailure(Call<Reading> call, Throwable t) {
-                Log.i("Reading onFailure", "Well, that didn't work");
-
-            }
-        });
 
         startLat = endLat;
         startLng = endLng;
@@ -255,6 +250,65 @@ public class PavementService extends Service implements com.google.android.gms.l
         else{
             return array;
         }
+    }
+
+    public void getCalibrationAndScoreboardIds(){
+        calibrationId = sharedPreferences.getInt("calibration_id", 0);
+        scoreboardId = sharedPreferences.getInt("scoreboard_id", 0);
+        Log.i("getcalibrationandscoreboard", "calibration_id: " + calibrationId);
+        Log.i("getcalibrationandscoreboard", "scoreboard_id: " + scoreboardId);
+
+    }
+    public void setCalibrationAndScoreboardIds(){
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        if(calibrationId == 0){
+            calibrationId = rideId;
+            editor.putInt("calibration_id", calibrationId);
+        }
+        if(scoreboardId == 0){
+            scoreboardId = rideId;
+            editor.putInt("scoreboard_id", scoreboardId);
+        }
+        editor.commit();
+    }
+
+    public void updateIds(){
+        getCalibrationAndScoreboardIds();
+        setCalibrationAndScoreboardIds();
+    }
+
+    public void putRideRequest(int id, Ride ride){
+        Log.i("putRide", "putRideRequest called");
+        Call<Ride> calibrationAndScoreboardCall = pavementAPIService.putRide(id, ride);
+        calibrationAndScoreboardCall.enqueue(new Callback<Ride>() {
+            @Override
+            public void onResponse(Call<Ride> call, Response<Ride> response) {
+                Log.i("putRide onResponse", "Ride: onSuccess: " + response.body() + "; onError: " + response.errorBody());
+                Ride savedRide = response.body();
+                int savedCalibrationId = savedRide.getCalibrationId();
+                Log.i("CalibrationID", "" + savedCalibrationId);
+            }
+
+            @Override
+            public void onFailure(Call<Ride> call, Throwable t) {
+                Log.i("putRide onFailure", "put ride failed");
+            }
+        });
+    }
+
+    public void postReadingRequest(Reading reading){
+        Call<Reading> call = pavementAPIService.postReading(reading);
+        call.enqueue(new Callback<Reading>() {
+            @Override
+            public void onResponse(Call<Reading> call, Response<Reading> response) {
+                Log.i("Reading onResponse", "response: onSuccess: " + response.body() + "; onError: " + response.errorBody());
+            }
+
+            @Override
+            public void onFailure(Call<Reading> call, Throwable t) {
+                Log.i("Reading onFailure", "Well, that didn't work");
+            }
+        });
     }
 
 
