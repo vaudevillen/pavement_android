@@ -15,8 +15,8 @@ public class Reading {
     public ArrayList<Float> acceleration_y;
     public ArrayList<Float> acceleration_z;
     public int ride_id;
-    public float start_time;
-    public float end_time;
+    public double start_time;
+    public double end_time;
     public float angle_x;
     public float angle_y;
     public float angle_z;
@@ -79,17 +79,17 @@ public class Reading {
         this.ride_id = ride_id;
     }
 
-    public float getStartTime() {
+    public double getStartTime() {
         return start_time;
     }
 
-    public void setStartTime(float start_time) {
+    public void setStartTime(double start_time) {
         this.start_time = start_time;
     }
 
-    public float getEndTime() { return end_time; }
+    public double getEndTime() { return end_time; }
 
-    public void setEndTime(float end_time) {
+    public void setEndTime(double end_time) {
         this.end_time = end_time;
     }
 

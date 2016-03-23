@@ -55,8 +55,8 @@ public class PavementService extends Service implements com.google.android.gms.l
     float angleX;
     float angleY;
     float angleZ;
-    float startTime;
-    float endTime;
+    double startTime;
+    double endTime;
     int rideId;
 
     @Override
@@ -82,7 +82,7 @@ public class PavementService extends Service implements com.google.android.gms.l
                     .build();
         }
 
-        pavementAPIService = PavementAPIServiceGenerator.createService(PavementAPIService.class, "peemster", "halsadick");
+        pavementAPIService = PavementAPIServiceGenerator.createService(PavementAPIService.class, "", "");
         final Ride ride = new Ride();
         ride.setStartTime(System.currentTimeMillis() / 1000);
         Call<Ride> createRideCall = pavementAPIService.createRide(ride);
@@ -150,14 +150,14 @@ public class PavementService extends Service implements com.google.android.gms.l
         if(startLat == null || startLng == null){
             startLat = location.getLatitude();
             startLng = location.getLongitude();
-            startTime = System.currentTimeMillis()/1000;
+            startTime = getCurrentTime();
             return;
         }
 
         endLat = location.getLatitude();
         endLng = location.getLongitude();
 
-        endTime = System.currentTimeMillis()/1000;
+        endTime = getCurrentTime();
 
         xArray = trimArray(xArray);
         yArray = trimArray(yArray);
@@ -218,8 +218,8 @@ public class PavementService extends Service implements com.google.android.gms.l
     }
     protected LocationRequest createLocationRequest() {
         LocationRequest mLocationRequest = new LocationRequest();
-        mLocationRequest.setInterval(500);
-        mLocationRequest.setFastestInterval(500);
+        mLocationRequest.setInterval(250);
+        mLocationRequest.setFastestInterval(250);
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         return mLocationRequest;
     }
@@ -309,6 +309,10 @@ public class PavementService extends Service implements com.google.android.gms.l
                 Log.i("Reading onFailure", "Well, that didn't work");
             }
         });
+    }
+
+    public double getCurrentTime(){
+        return System.currentTimeMillis()/1000;
     }
 
 
