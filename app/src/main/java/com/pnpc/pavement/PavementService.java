@@ -82,7 +82,7 @@ public class PavementService extends Service implements com.google.android.gms.l
                     .build();
         }
 
-        pavementAPIService = PavementAPIServiceGenerator.createService(PavementAPIService.class, "peemster", "halsadick");
+        pavementAPIService = PavementAPIServiceGenerator.createService(PavementAPIService.class, "", "");
         final Ride ride = new Ride();
         ride.setStartTime(System.currentTimeMillis() / 1000);
         Call<Ride> createRideCall = pavementAPIService.createRide(ride);

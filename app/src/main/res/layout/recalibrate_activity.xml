@@ -22,4 +22,22 @@
         android:id="@+id/recalibrate_button"
         />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/recalibrate_button"
+        android:layout_centerHorizontal="true"
+        android:text="@string/recalibrate_text_one"
+        android:id="@+id/recal_text_one"
+        android:paddingBottom="10dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/recal_text_one"
+        android:layout_centerHorizontal="true"
+        android:text="@string/recalibrate_text_one"
+        android:id="@+id/recal_text_two"/>
+
+
 </RelativeLayout>

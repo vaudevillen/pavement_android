@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">pavement</string>
     <string name="action_stats">Stats</string>
+    <string name="recalibrate_text_one">Press this button when your pavement measuring setup changes, such as if you switch your bike, tires, or phone mount.</string>
+    <string name="recalibrate_text_two">Recalibrating will rpeserve your record of miles measured.</string>
 </resources>
