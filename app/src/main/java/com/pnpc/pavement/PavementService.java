@@ -82,7 +82,7 @@ public class PavementService extends Service implements com.google.android.gms.l
                     .build();
         }
 
-        pavementAPIService = PavementAPIServiceGenerator.createService(PavementAPIService.class, "", "");
+        pavementAPIService = PavementAPIServiceGenerator.createService(PavementAPIService.class, "peemster", "halsadick");
         final Ride ride = new Ride();
         ride.setStartTime(System.currentTimeMillis() / 1000);
         Call<Ride> createRideCall = pavementAPIService.createRide(ride);
@@ -218,7 +218,7 @@ public class PavementService extends Service implements com.google.android.gms.l
     }
     protected LocationRequest createLocationRequest() {
         LocationRequest mLocationRequest = new LocationRequest();
-        mLocationRequest.setInterval(250);
+        mLocationRequest.setInterval(500);
         mLocationRequest.setFastestInterval(250);
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         return mLocationRequest;
@@ -257,13 +257,13 @@ public class PavementService extends Service implements com.google.android.gms.l
         scoreboardId = sharedPreferences.getInt("scoreboard_id", 0);
         Log.i("getcalibrationandscoreboard", "calibration_id: " + calibrationId);
         Log.i("getcalibrationandscoreboard", "scoreboard_id: " + scoreboardId);
-
     }
     public void setCalibrationAndScoreboardIds(){
         SharedPreferences.Editor editor = sharedPreferences.edit();
         if(calibrationId == 0){
             calibrationId = rideId;
             editor.putInt("calibration_id", calibrationId);
+            Log.i("calibration", "setCalibrationAndScoreboardIds called");
         }
         if(scoreboardId == 0){
             scoreboardId = rideId;
