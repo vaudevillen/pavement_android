@@ -3,6 +3,8 @@ package com.pnpc.pavement;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.PorterDuff.Mode;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -13,8 +15,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
+
 public class MainActivity extends AppCompatActivity {
 
+    ImageView serviceButton;
+    boolean serviceStarted;
     private static final String[] INITIAL_PERMS = {
             Manifest.permission.ACCESS_FINE_LOCATION,
     };
@@ -23,8 +28,7 @@ public class MainActivity extends AppCompatActivity {
             Manifest.permission.ACCESS_FINE_LOCATION
     };
     private static final int LOCATION_REQUEST = 1337;
-    ImageView serviceButton;
-    boolean serviceStarted;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,10 +63,13 @@ public class MainActivity extends AppCompatActivity {
                     startService(serviceIntent);
                     serviceStarted = true;
                     setServiceButtonImage();
+                    serviceButton.setColorFilter(Color.BLUE, Mode.SRC_ATOP);
+
                     Log.d("PavementService", "startService called");
                 } else {
                     stopService(serviceIntent);
                     serviceStarted = false;
+                    serviceButton.setColorFilter(null);
                     setServiceButtonImage();
                 }
             }
@@ -74,6 +81,10 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+
+//        MenuItem item = menu.getItem(R.id.action_pavement);
+//        View actionPavementView = item.getActionView();
+
         return true;
     }
 
@@ -130,7 +141,7 @@ public class MainActivity extends AppCompatActivity {
             serviceButton.setImageResource(R.drawable.toggle);
         }
         else{
-            serviceButton.setImageResource(R.drawable.stop);
+            serviceButton.setImageResource(R.drawable.stop_3);
         }
     }
 
