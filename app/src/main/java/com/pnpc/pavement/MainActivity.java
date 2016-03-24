@@ -13,10 +13,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
-import java.math.BigDecimal;
-import java.text.NumberFormat;
-import java.util.concurrent.TimeUnit;
-
 public class MainActivity extends AppCompatActivity {
 
     private static final String[] INITIAL_PERMS = {
