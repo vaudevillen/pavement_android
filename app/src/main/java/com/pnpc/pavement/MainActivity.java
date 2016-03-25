@@ -38,13 +38,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         if(savedInstanceState != null){
-            Log.i("savedInstance", "savedInstanceState not null");
-            Log.i("savedInstance", "serviceStarted: " + savedInstanceState.getBoolean("serviceStarted"));
             serviceStarted = savedInstanceState.getBoolean("serviceStarted");
-        }
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            Log.i("GPS permission code", "Check self permission: " + checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION));
         }
 
         //Checking SDK. If above 6.0, checks location permission. If not granted, requests it.
@@ -53,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
                 requestPermissions(LOCATION_PERMS, LOCATION_REQUEST);
             }
         }
+
         serviceButton = (ImageView) findViewById(R.id.service_button);
 
         serviceButton.setOnClickListener(new View.OnClickListener() {
@@ -65,12 +60,13 @@ public class MainActivity extends AppCompatActivity {
                     setServiceButtonImage();
                     serviceButton.setColorFilter(Color.BLUE, Mode.SRC_ATOP);
 
-                    Log.d("PavementService", "startService called");
+                    Log.i("PavementService", "startService called");
                 } else {
                     stopService(serviceIntent);
                     serviceStarted = false;
                     serviceButton.setColorFilter(null);
                     setServiceButtonImage();
+                    Log.i("PavementService", "stopService called");
                 }
             }
         });
@@ -95,7 +91,6 @@ public class MainActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_stats) {
             Intent intent = new Intent(MainActivity.this, RecalibrateActivity.class);
             startActivity(intent);
