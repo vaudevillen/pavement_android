@@ -15,7 +15,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
-
 public class MainActivity extends AppCompatActivity {
 
     ImageView serviceButton;
@@ -77,9 +76,6 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
-
-//        MenuItem item = menu.getItem(R.id.action_pavement);
-//        View actionPavementView = item.getActionView();
 
         return true;
     }
