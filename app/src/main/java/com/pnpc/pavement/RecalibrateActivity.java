@@ -2,6 +2,9 @@ package com.pnpc.pavement;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
@@ -39,6 +42,12 @@ public class RecalibrateActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+
+        Drawable pavementIcon = getResources().getDrawable(R.drawable.pavement_tab);
+        pavementIcon.setColorFilter(null);
+        Drawable statsIcon = getResources().getDrawable(R.drawable.stats_tab);
+        statsIcon.setColorFilter(Color.BLUE, PorterDuff.Mode.SRC_ATOP);
+
         return true;
     }
     @Override

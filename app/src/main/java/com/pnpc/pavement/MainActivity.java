@@ -5,9 +5,11 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.PorterDuff.Mode;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.view.menu.ActionMenuItemView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -76,6 +78,11 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+
+        Drawable statsIcon = getResources().getDrawable(R.drawable.stats_tab);
+        statsIcon.setColorFilter(null);
+        Drawable pavementIcon = getResources().getDrawable(R.drawable.pavement_tab);
+        pavementIcon.setColorFilter(Color.BLUE, Mode.SRC_ATOP);
 
         return true;
     }
