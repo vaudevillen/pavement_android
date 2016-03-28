@@ -13,6 +13,23 @@
     tools:context="com.pnpc.pavement.MainActivity"
     >
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="@string/miles_info"
+        android:id="@+id/miles_info_text"
+        android:paddingBottom="10dp"
+        android:paddingTop="20dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/miles_info_text"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/miles_measured"
+        android:paddingBottom="10dp"/>
+
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -38,6 +55,5 @@
         android:layout_centerHorizontal="true"
         android:text="@string/recalibrate_text_one"
         android:id="@+id/recal_text_two"/>
-
 
 </RelativeLayout>
