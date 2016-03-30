@@ -86,7 +86,6 @@ public class PavementService extends Service implements com.google.android.gms.l
         final Ride ride = new Ride();
         ride.setStartTime(System.currentTimeMillis() / 1000);
         Call<Ride> createRideCall = pavementAPIService.createRide(ride);
-        Log.i("Ride", "id" + ride.getId() + ", calibration" + ride.getCalibrationId() + ", endTime " + ride.getEndTime() + ", scoreboard" + ride.getScoreboardId() + ", startTime" + ride.getStartTime());
         createRideCall.enqueue(new Callback<Ride>() {
             @Override
             public void onResponse(Call<Ride> call, Response<Ride> response) {
@@ -314,6 +313,7 @@ public class PavementService extends Service implements com.google.android.gms.l
     public double getCurrentTime(){
         return System.currentTimeMillis()/1000;
     }
+
 
 
 }
