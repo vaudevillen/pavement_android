@@ -20,11 +20,16 @@ public class RecalibrateActivity extends AppCompatActivity {
 
     ImageView recalibrateButton;
     SharedPreferences sharedPreferences;
+    boolean serviceStarted;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.recalibrate_activity);
+
+        Bundle bundle = getIntent().getExtras();
+
+        serviceStarted = bundle.getBoolean("serviceStarted");
 
         recalibrateButton = (ImageView) findViewById(R.id.recalibrate_button);
         recalibrateButton.setOnClickListener(new View.OnClickListener() {
@@ -56,6 +61,9 @@ public class RecalibrateActivity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_pavement) {
             Intent intent = new Intent(RecalibrateActivity.this, MainActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putBoolean("serviceStarted", serviceStarted);
+            intent.putExtras(bundle);
             startActivity(intent);
             return true;
         }

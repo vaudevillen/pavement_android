@@ -16,6 +16,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
+import retrofit2.http.POST;
+
 public class MainActivity extends AppCompatActivity {
 
     ImageView serviceButton;
@@ -58,18 +60,18 @@ public class MainActivity extends AppCompatActivity {
                     startService(serviceIntent);
                     serviceStarted = true;
                     setServiceButtonImage();
-                    serviceButton.setColorFilter(Color.BLUE, Mode.SRC_ATOP);
 
                     Log.i("PavementService", "startService called");
                 } else {
                     stopService(serviceIntent);
                     serviceStarted = false;
-                    serviceButton.setColorFilter(null);
                     setServiceButtonImage();
                     Log.i("PavementService", "stopService called");
                 }
             }
         });
+
+        checkServiceStarted();
 
     }
 
@@ -95,6 +97,9 @@ public class MainActivity extends AppCompatActivity {
 
         if (id == R.id.action_stats) {
             Intent intent = new Intent(MainActivity.this, RecalibrateActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putBoolean("serviceStarted", serviceStarted);
+            intent.putExtras(bundle);
             startActivity(intent);
             return true;
         }
@@ -118,15 +123,14 @@ public class MainActivity extends AppCompatActivity {
     private boolean hasLocationPermission() {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M){
             return(PackageManager.PERMISSION_GRANTED==checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION));
-        }
-        else{
+        } else {
             return true;
         }
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        if(serviceStarted == true){
+        if(serviceStarted == true) {
             outState.putBoolean("serviceStarted", serviceStarted);
         }
         Log.i("onSavedInstanceState", "outstate: serviceStarted " + serviceStarted);
@@ -136,9 +140,11 @@ public class MainActivity extends AppCompatActivity {
     public void setServiceButtonImage(){
         if(serviceStarted == false){
             serviceButton.setImageResource(R.drawable.toggle);
+            serviceButton.setColorFilter(null);
         }
         else{
             serviceButton.setImageResource(R.drawable.stop_3);
+            serviceButton.setColorFilter(Color.BLUE, Mode.SRC_ATOP);
         }
     }
 
@@ -149,6 +155,16 @@ public class MainActivity extends AppCompatActivity {
             setServiceButtonImage();
         }
         super.onRestoreInstanceState(savedInstanceState);
+    }
+
+    public void checkServiceStarted(){
+        Bundle bundle = getIntent().getExtras();
+
+        if(bundle != null){
+            serviceStarted = bundle.getBoolean("serviceStarted");
+            setServiceButtonImage();
+        }
+
     }
 
 }
