@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 /**
  * Created by jjshin on 3/21/16.
@@ -36,15 +37,22 @@ public class RecalibrateActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         Bundle bundle = getIntent().getExtras();
-
         serviceStarted = bundle.getBoolean("serviceStarted");
+
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        final SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        float milesMeasured = sharedPreferences.getFloat("miles_measured", 0);
+        String formattedMiles = String.format("%.02f", milesMeasured);
+
+        TextView milesText = (TextView) findViewById(R.id.miles_measured);
+        milesText.setText(formattedMiles);
 
         recalibrateButton = (ImageView) findViewById(R.id.recalibrate_button);
         recalibrateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-                SharedPreferences.Editor editor = sharedPreferences.edit();
+
                 editor.remove("calibration_id");
                 editor.commit();
             }
