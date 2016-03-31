@@ -10,6 +10,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,6 +23,7 @@ import retrofit2.http.POST;
 
 public class MainActivity extends AppCompatActivity {
 
+    Toolbar toolbar;
     ImageView serviceButton;
     boolean serviceStarted;
     private static final String[] INITIAL_PERMS = {
@@ -36,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         if(savedInstanceState != null){
@@ -79,6 +83,14 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+
+        Spannable actionBarTitle = new SpannableString("Pavement");
+        actionBarTitle.setSpan(
+                new ForegroundColorSpan(Color.BLACK),
+                0,
+                actionBarTitle.length(),
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        toolbar.setTitle(actionBarTitle);
 
         Drawable statsIcon = getResources().getDrawable(R.drawable.stats_tab);
         statsIcon.setColorFilter(null);
@@ -143,7 +155,7 @@ public class MainActivity extends AppCompatActivity {
             serviceButton.setColorFilter(null);
         }
         else{
-            serviceButton.setImageResource(R.drawable.stop_3);
+            serviceButton.setImageResource(R.drawable.stop);
             serviceButton.setColorFilter(Color.BLUE, Mode.SRC_ATOP);
         }
     }

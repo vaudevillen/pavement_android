@@ -62,7 +62,6 @@ public class PavementService extends Service implements com.google.android.gms.l
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 //        return super.onStartCommand(intent, flags, startId);
-        Toast.makeText(this, "Pavement service starting", Toast.LENGTH_SHORT).show();
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
@@ -82,7 +81,7 @@ public class PavementService extends Service implements com.google.android.gms.l
                     .build();
         }
 
-        pavementAPIService = PavementAPIServiceGenerator.createService(PavementAPIService.class, "", "");
+        pavementAPIService = PavementAPIServiceGenerator.createService(PavementAPIService.class, "peemster", "halsadick");
         final Ride ride = new Ride();
         ride.setStartTime(System.currentTimeMillis() / 1000);
         Call<Ride> createRideCall = pavementAPIService.createRide(ride);
@@ -96,13 +95,14 @@ public class PavementService extends Service implements com.google.android.gms.l
                 ride.setCalibrationId(calibrationId);
                 ride.setScoreboardId(scoreboardId);
                 putRideRequest(rideId, ride);
-//                googleApiClient connect called here to make sure rideId isn't null
+//              googleApiClient connect called here to make sure rideId isn't null when collecting readings
                 googleApiClient.connect();
             }
 
             @Override
             public void onFailure(Call<Ride> call, Throwable t) {
                 Log.i("createRide onFailure", "Create ride failed");
+                Toast.makeText(PavementService.this, "Something went wrong. Please restart Pavement.", Toast.LENGTH_SHORT).show();
             }
         });
 
