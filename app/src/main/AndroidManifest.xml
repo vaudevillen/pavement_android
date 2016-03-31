@@ -20,7 +20,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".RecalibrateActivity">
+            android:name=".RecalibrateActivity"
+            android:theme="@style/AppTheme.NoActionBar">
         </activity>
         </application>
     <uses-permission android:name="android.permission.INTERNET" />

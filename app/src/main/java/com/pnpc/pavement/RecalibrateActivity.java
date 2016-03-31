@@ -8,6 +8,10 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,6 +22,7 @@ import android.widget.ImageView;
  */
 public class RecalibrateActivity extends AppCompatActivity {
 
+    Toolbar toolbar;
     ImageView recalibrateButton;
     SharedPreferences sharedPreferences;
     boolean serviceStarted;
@@ -25,7 +30,10 @@ public class RecalibrateActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.recalibrate_activity);
+        setContentView(R.layout.activity_recalibrate);
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         Bundle bundle = getIntent().getExtras();
 
@@ -48,6 +56,13 @@ public class RecalibrateActivity extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
 
+        Spannable actionBarTitle = new SpannableString("Pavement");
+        actionBarTitle.setSpan(
+                new ForegroundColorSpan(Color.BLACK),
+                0,
+                actionBarTitle.length(),
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        toolbar.setTitle(actionBarTitle);
         Drawable pavementIcon = getResources().getDrawable(R.drawable.pavement_tab);
         pavementIcon.setColorFilter(null);
         Drawable statsIcon = getResources().getDrawable(R.drawable.stats_tab);
