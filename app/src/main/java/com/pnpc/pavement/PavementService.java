@@ -37,6 +37,8 @@ import retrofit2.Response;
  */
 public class PavementService extends Service implements com.google.android.gms.location.LocationListener, SensorEventListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
+    DistanceCalculator distanceCalculator = new DistanceCalculator();
+    SharedPreferences.Editor editor;
     SharedPreferences sharedPreferences;
     SensorManager sensorManager;
     LocationManager locManager;
@@ -64,6 +66,7 @@ public class PavementService extends Service implements com.google.android.gms.l
 //        return super.onStartCommand(intent, flags, startId);
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        editor = sharedPreferences.edit();
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         Sensor accelerometerSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         Sensor gyroscopeSensor = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
@@ -81,7 +84,7 @@ public class PavementService extends Service implements com.google.android.gms.l
                     .build();
         }
 
-        pavementAPIService = PavementAPIServiceGenerator.createService(PavementAPIService.class, "peemster", "halsadick");
+        pavementAPIService = PavementAPIServiceGenerator.createService(PavementAPIService.class, "", "");
         final Ride ride = new Ride();
         ride.setStartTime(System.currentTimeMillis() / 1000);
         Call<Ride> createRideCall = pavementAPIService.createRide(ride);
@@ -174,7 +177,9 @@ public class PavementService extends Service implements com.google.android.gms.l
         reading.setEndTime(endTime);
 
         postReadingRequest(reading);
-        Log.i("reading", "" + reading.getRideId());
+
+        double distance = calculateDistance(startLat, startLng, endLat, endLng);
+        updateDistance(distance);
 
         startLat = endLat;
         startLng = endLng;
@@ -258,7 +263,6 @@ public class PavementService extends Service implements com.google.android.gms.l
         Log.i("getcalibrationandscoreboard", "scoreboard_id: " + scoreboardId);
     }
     public void setCalibrationAndScoreboardIds(){
-        SharedPreferences.Editor editor = sharedPreferences.edit();
         if(calibrationId == 0){
             calibrationId = rideId;
             editor.putInt("calibration_id", calibrationId);
@@ -314,6 +318,24 @@ public class PavementService extends Service implements com.google.android.gms.l
         return System.currentTimeMillis()/1000;
     }
 
+    public double calculateDistance(double lat1, double lng1, double lat2, double lng2){
+        double distance = distanceCalculator.calculateDistance(lat1, lng1, lat2, lng2);
+        return distance;
+    }
+
+    public void updateDistance(double miles){
+        double oldMilesMeasured = sharedPreferences.getFloat("miles_measured", (float) 0.0);
+        if(oldMilesMeasured == 0.0){
+            editor.putFloat("miles_measured", (float) miles);
+            editor.commit();
+        }
+        else{
+            double newMilesMeasured = oldMilesMeasured + miles;
+            editor.putFloat("miles_measured", (float) newMilesMeasured);
+            editor.commit();
+            Log.i("miles measured", "" + newMilesMeasured);
+        }
+    }
 
 
 }
