@@ -41,7 +41,6 @@ public class PavementService extends Service implements com.google.android.gms.l
     SharedPreferences.Editor editor;
     SharedPreferences sharedPreferences;
     SensorManager sensorManager;
-    LocationManager locManager;
     GoogleApiClient googleApiClient;
     PavementAPIService pavementAPIService;
     LocationRequest locationRequest;

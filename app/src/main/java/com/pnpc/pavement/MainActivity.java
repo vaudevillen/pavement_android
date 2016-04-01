@@ -8,6 +8,7 @@ import android.graphics.PorterDuff.Mode;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
@@ -75,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //This checks if MainActivity was opened from RecalibrateActivity and if the service was already started
         checkServiceStarted();
 
     }
@@ -92,9 +94,10 @@ public class MainActivity extends AppCompatActivity {
                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         toolbar.setTitle(actionBarTitle);
 
-        Drawable statsIcon = getResources().getDrawable(R.drawable.stats_tab);
+
+        Drawable statsIcon = ResourcesCompat.getDrawable(getResources(), R.drawable.stats_tab, null);
         statsIcon.setColorFilter(null);
-        Drawable pavementIcon = getResources().getDrawable(R.drawable.pavement_tab);
+        Drawable pavementIcon = ResourcesCompat.getDrawable(getResources(), R.drawable.pavement_tab, null);
         pavementIcon.setColorFilter(Color.BLUE, Mode.SRC_ATOP);
 
         return true;
