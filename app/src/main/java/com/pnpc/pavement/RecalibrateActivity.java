@@ -7,6 +7,7 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
@@ -71,9 +72,10 @@ public class RecalibrateActivity extends AppCompatActivity {
                 actionBarTitle.length(),
                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         toolbar.setTitle(actionBarTitle);
-        Drawable pavementIcon = getResources().getDrawable(R.drawable.pavement_tab);
+
+        Drawable pavementIcon = ResourcesCompat.getDrawable(getResources(), R.drawable.pavement_tab, null);
         pavementIcon.setColorFilter(null);
-        Drawable statsIcon = getResources().getDrawable(R.drawable.stats_tab);
+        Drawable statsIcon = ResourcesCompat.getDrawable(getResources(), R.drawable.stats_tab, null);
         statsIcon.setColorFilter(Color.BLUE, PorterDuff.Mode.SRC_ATOP);
 
         return true;
