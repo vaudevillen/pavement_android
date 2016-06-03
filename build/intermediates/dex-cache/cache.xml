@@ -1,2 +1,124 @@
 <?xml version="1.0" encoding="utf-8"?>
-<items version="2" />
+<items version="2" >
+
+    <item
+        jar="/Users/jjshin/.gradle/caches/modules-2/files-2.1/com.squareup.okhttp3/okhttp/3.0.1/b34c1f2d993044656e87f88970b6818e99e886ba/okhttp-3.0.1.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="b34c1f2d993044656e87f88970b6818e99e886ba">
+        <dex dex="/Users/jjshin/Projects/pavement/app/build/intermediates/transforms/dex/debug/folders/1000/10/okhttp-3.0.1_c1e42997e4470ba287eab00d686afa5c06a4ec1d/classes.dex" />
+    </item>
+    <item
+        jar="/Users/jjshin/Projects/pavement/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/23.1.1/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="09c5e804bc67fc0580360043dff067df574a60d4">
+        <dex dex="/Users/jjshin/Projects/pavement/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-recyclerview-v7-23.1.1_dd529a6de1ef016f97b4a10022d57a35e1d2fc7f/classes.dex" />
+    </item>
+    <item
+        jar="/Users/jjshin/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/23.1.1/support-annotations-23.1.1.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="8d680ba5a623724d1fb0e81c36a790f023a6cede">
+        <dex dex="/Users/jjshin/Projects/pavement/app/build/intermediates/transforms/dex/debug/folders/1000/10/support-annotations-23.1.1_2cb851b11e749f5a317524074b98dd1be3bfce07/classes.dex" />
+    </item>
+    <item
+        jar="/Users/jjshin/Projects/pavement/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="6cbc7773921fcfedbe55657578f0cbfe614778dc">
+        <dex dex="/Users/jjshin/Projects/pavement/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-v4-23.1.1_9ad1f35970147a070bc80ededd114a99d7aa6607/classes.dex" />
+    </item>
+    <item
+        jar="/Users/jjshin/Projects/pavement/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="f7e5c5023058a6ad7dd3749dccb9e0ba213aefdc">
+        <dex dex="/Users/jjshin/Projects/pavement/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_5cef59ba5bd50702ad2732690dbf4405fb8bcba0/classes.dex" />
+    </item>
+    <item
+        jar="/Users/jjshin/Projects/pavement/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="5c5699834e9722f1c288fea2de82725d078ba127">
+        <dex dex="/Users/jjshin/Projects/pavement/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-appcompat-v7-23.1.1_466574ef7fa51be6925f9030014c5d44e2215935/classes.dex" />
+    </item>
+    <item
+        jar="/Users/jjshin/Projects/pavement/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="20985b83bb7a1d800b5ef7510ab9adfae8a1a26a">
+        <dex dex="/Users/jjshin/Projects/pavement/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_f8d39ad3c0a46656d51018884fadf0d161c05aa9/classes.dex" />
+    </item>
+    <item
+        jar="/Users/jjshin/Projects/pavement/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/jars/libs/internal_impl-23.1.1.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="a4de9c81ae239414e1ed0f86441b02abaf29bca9">
+        <dex dex="/Users/jjshin/Projects/pavement/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-23.1.1_a63ff1a708b8e6f4577bc50e935dace05a70d849/classes.dex" />
+    </item>
+    <item
+        jar="/Users/jjshin/.gradle/caches/modules-2/files-2.1/com.squareup.retrofit2/retrofit/2.0.0-beta4/739e00dea1f0ac04fdb9b6160d667e23cc50a791/retrofit-2.0.0-beta4.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="739e00dea1f0ac04fdb9b6160d667e23cc50a791">
+        <dex dex="/Users/jjshin/Projects/pavement/app/build/intermediates/transforms/dex/debug/folders/1000/10/retrofit-2.0.0-beta4_9ffe4905d9d7cac4b54dc280947c211180822092/classes.dex" />
+    </item>
+    <item
+        jar="/Users/jjshin/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.4/695b63d702f505b9b916e02272e3b6381bade7f/gson-2.4.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="0695b63d702f505b9b916e02272e3b6381bade7f">
+        <dex dex="/Users/jjshin/Projects/pavement/app/build/intermediates/transforms/dex/debug/folders/1000/10/gson-2.4_56c369ba5bce025aa94d4dd32e1bf0a370ae3067/classes.dex" />
+    </item>
+    <item
+        jar="/Users/jjshin/Projects/pavement/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.4.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="8e673cdfadd8f2d98fdb2fda2285c30f6e449782">
+        <dex dex="/Users/jjshin/Projects/pavement/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-basement-8.4.0_c52e53315ec928d64f17dbf1217526cc7351ef9e/classes.dex" />
+    </item>
+    <item
+        jar="/Users/jjshin/.gradle/caches/modules-2/files-2.1/com.squareup.okio/okio/1.6.0/98476622f10715998eacf9240d6b479f12c66143/okio-1.6.0.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="98476622f10715998eacf9240d6b479f12c66143">
+        <dex dex="/Users/jjshin/Projects/pavement/app/build/intermediates/transforms/dex/debug/folders/1000/10/okio-1.6.0_82283435a6cb8f3a7872cd82200f21214b12b767/classes.dex" />
+    </item>
+    <item
+        jar="/Users/jjshin/Projects/pavement/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="fef2b3e4b6b1b0e5fe7b69fa137a5fa55a3182ab">
+        <dex dex="/Users/jjshin/Projects/pavement/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-base-8.4.0_6263141a63f4f3a6d67030f2a2091e8d09635d60/classes.dex" />
+    </item>
+    <item
+        jar="/Users/jjshin/.gradle/caches/modules-2/files-2.1/com.squareup.retrofit2/converter-gson/2.0.0-beta4/de5935a367ba5e343e9df786ac8fc0c7d52b5f0c/converter-gson-2.0.0-beta4.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="de5935a367ba5e343e9df786ac8fc0c7d52b5f0c">
+        <dex dex="/Users/jjshin/Projects/pavement/app/build/intermediates/transforms/dex/debug/folders/1000/10/converter-gson-2.0.0-beta4_7e56ab8c5a6064176eea8933653235896a6b246a/classes.dex" />
+    </item>
+    <item
+        jar="/Users/jjshin/Projects/pavement/app/build/intermediates/exploded-aar/com.android.support/design/23.1.1/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="379471b2bd17d9737c050345c08e8c7d16589784">
+        <dex dex="/Users/jjshin/Projects/pavement/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-design-23.1.1_988716c05e968ab735374585da7255c1aa03222b/classes.dex" />
+    </item>
+    <item
+        jar="/Users/jjshin/Projects/pavement/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-location/8.4.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="a8412b654dab86d57bf90683367488211c8a81f1">
+        <dex dex="/Users/jjshin/Projects/pavement/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-location-8.4.0_86130c8d30350e268c798167caafdaf187b69346/classes.dex" />
+    </item>
+    <item
+        jar="/Users/jjshin/Projects/pavement/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-maps/8.4.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="04de44f90606c77f3b28cf44861f306290505aac">
+        <dex dex="/Users/jjshin/Projects/pavement/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-maps-8.4.0_172eb763ee7dae826d0f1891750612a4fae9cccc/classes.dex" />
+    </item>
+
+</items>

@@ -20,7 +20,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
-import retrofit2.http.POST;
+import com.pnpc.pavement.Services.PavementService;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -123,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onPause() {
+    public void onPause() {
         super.onPause();
     }
 
@@ -144,7 +144,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(Bundle outState) {
         if(serviceStarted == true) {
             outState.putBoolean("serviceStarted", serviceStarted);
         }
@@ -164,7 +164,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
         serviceStarted = savedInstanceState.getBoolean("serviceStarted");
         if(serviceStarted == true){
             setServiceButtonImage();
@@ -181,5 +181,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+
 
 }
